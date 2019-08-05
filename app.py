@@ -2,44 +2,47 @@ from pymessenger import Bot
 import os, sys
 from flask import Flask, request
 
-app = Flask(__name__)
+app = Flask('My echo bot')
 PAGE_ACCESS_TOKEN = 'EAAg4f5ZBJPCwBACZBIOH5xDydyb4utfDO7sFuG2hChwCewqppbHYux2KrfExxtlz7wiEeYAaWUlZAgZBgfBtCoxHixH0ZAwer7NGHQG3nLTdsrkZCQTJbO33gT61GcpVmMcFagBbBPm7we5NZCaNlqobTeh85S6LemDHiJ800EibFMUtl58IQZA4YA3VTAC5qkEZD'
 bot = Bot(PAGE_ACCESS_TOKEN)
 
+VERIFICATION_TOKEN = "hello"
+
+
 @app.route('/', methods=['GET'])
 def verify():
-    #Webhook Verification
-    if request.args.get('hub.mode') == 'subscribe' and request.args.get('hub.challenge'):
-        if not request.args.get('hub.verify_token') == 'hello':
-            return 'Verification Token Mismatch', 403
-        return request.args['hub.challenge'], 200
-    return 'hello world', 200
+	if request.args.get("hub.mode") == "subscribe" and request.args.get("hub.challenge"):
+		if not request.args.get("hub.verify_token") == VERIFICATION_TOKEN:
+			return "Verification token mismatch", 403
+		return request.args["hub.challenge"], 200
+	return "Hello world", 200
 
-@app.route('/',methods=['POST'])
+
+@app.route('/', methods=['POST'])
 def webhook():
-    data = request.get_json()
-    log(data)
+	print(request.data)
+	data = request.get_json()
 
-    if data['object'] == 'page':
-        for entry in data['entry']:
-            for messaging_event in entry['messaging']:
-                #IDs
-                sender_id = messaging_event['sender']['id']
-                recipient_id = messaging_event['recipient']['id']
-                if messaging_event.get('message'):
-                    if 'text' in messaging_event['message']:
-                        messaging_text = messaging_event['message']['text']
-                    else:
-                        messaging_text = 'no_text'
-                    #Echo
-                    response = messaging_text
-                    bot.send_text_message(sender_id, response)
+	if data['object'] == "page":
+		entries = data['entry']
 
-    return "ok", 200
+		for entry in entries:
+			messaging = entry['messaging']
 
-def log(message):
-    print(message)
-    sys.stdout.flush()
+			for messaging_event in messaging:
 
-if __name__ == '__main__':
-    app.run(debug = True, port = 80)
+				sender_id = messaging_event['sender']['id']
+				recipient_id = messaging_event['recipient']['id']
+
+				if messaging_event.get('message'):
+					# HANDLE NORMAL MESSAGES HERE
+					if messaging_event['message'].get('text'):
+						# HANDLE TEXT MESSAGES
+						query = messaging_event['message']['text']
+						# ECHO THE RECEIVED MESSAGE
+						bot.send_text_message(sender_id, query)
+	return "ok", 200
+
+
+if __name__ == "__main__":
+	app.run(port=80, use_reloader = True)
