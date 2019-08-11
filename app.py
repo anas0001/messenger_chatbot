@@ -41,6 +41,7 @@ def webhook():
 						query = messaging_event['message']['text']
 						# ECHO THE RECEIVED MESSAGE
 						bot.send_text_message(sender_id, query)
+						bot.send_text_message(sender_id, query)
 	return "ok", 200
 
 
