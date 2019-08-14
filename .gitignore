@@ -1,3 +1,7 @@
 myvenv/
 Chatbot Notes.txt
 ngrok
+build/
+dist/
+utils.spec
+__pycache__
