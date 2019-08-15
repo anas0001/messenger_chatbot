@@ -40,8 +40,14 @@ def webhook():
 						# HANDLE TEXT MESSAGES
 						query = messaging_event['message']['text']
 						# ECHO THE RECEIVED MESSAGE
-						bot.send_text_message(sender_id, "query")
+						a = {
+						  "content_type":"text",
+						  "title":"<BUTTON_TEXT>",
+						  "image_url":"http://example.com/img/red.png",
+						  "payload":"<DEVELOPER_DEFINED_PAYLOAD>"
+						}
 						bot.send_text_message(sender_id, query)
+						flask.jsonify(a)
 	return "ok", 200
 
 
