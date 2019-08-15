@@ -1,6 +1,6 @@
 from pymessenger import Bot
 import os, sys
-from flask import Flask, request
+from flask import Flask, request, jsonify
 
 app = Flask('My echo bot')
 PAGE_ACCESS_TOKEN = 'EAAg4f5ZBJPCwBACZBIOH5xDydyb4utfDO7sFuG2hChwCewqppbHYux2KrfExxtlz7wiEeYAaWUlZAgZBgfBtCoxHixH0ZAwer7NGHQG3nLTdsrkZCQTJbO33gT61GcpVmMcFagBbBPm7we5NZCaNlqobTeh85S6LemDHiJ800EibFMUtl58IQZA4YA3VTAC5qkEZD'
@@ -42,7 +42,7 @@ def webhook():
 						# ECHO THE RECEIVED MESSAGE
 						a = {"content_type":"text","title":"Button","image_url":"http://example.com/img/red.png","payload":"<DEVELOPER_DEFINED_PAYLOAD>"}
 						bot.send_text_message(sender_id, query)
-						flask.jsonify(a)
+						return jsonify(content_type="text",title="Button",payload="test")
 	return "ok", 200
 
 
