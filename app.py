@@ -42,7 +42,7 @@ def webhook():
 						# ECHO THE RECEIVED MESSAGE
 						a = {"content_type":"text","title":"Button","image_url":"http://example.com/img/red.png","payload":"<DEVELOPER_DEFINED_PAYLOAD>"}
 						bot.send_text_message(sender_id, query)
-						return jsonify(content_type="text",title="Button",payload="test")
+						return jsonify(content_type="text",title="Button",image_url="https://cbsnews1.cbsistatic.com/hub/i/2016/03/23/38e32f54-b910-4612-8852-be9e0fbdbf73/cat-istock.jpg",payload="test")
 	return "ok", 200
 
 
