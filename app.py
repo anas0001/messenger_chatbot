@@ -42,7 +42,7 @@ def webhook():
 						# ECHO THE RECEIVED MESSAGE
 						a = {
 						  "content_type":"text",
-						  "title":"<BUTTON_TEXT>",
+						  "title":"Button",
 						  "image_url":"http://example.com/img/red.png",
 						  "payload":"<DEVELOPER_DEFINED_PAYLOAD>"
 						}
