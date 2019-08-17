@@ -41,7 +41,7 @@ def webhook():
 						query = messaging_event['message']['text']
 						# ECHO THE RECEIVED MESSAGE
 						bot.send_text_message(sender_id, query)
-						#bot.send_video(sender_id, "https://www.youtube.com/watch?v=1I-3vJSC-Vo")
+						bot.send_video(sender_id, "https://www.youtube.com/watch?v=1I-3vJSC-Vo")
 	return "ok", 200
 
 
