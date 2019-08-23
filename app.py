@@ -40,9 +40,9 @@ def webhook():
 						# HANDLE TEXT MESSAGES
 						query = messaging_event['message']['text']
 						# ECHO THE RECEIVED MESSAGE
-						bot.send_text_message(sender_id, query)
+						#bot.send_text_message(sender_id, query)
 						#bot.send_video_url(sender_id, "https://www.youtube.com/watch?v=1I-3vJSC-Vo")
-						#return jsonify({"recipient":{"id":recipient_id},"message":{"text":"hello, world!"}})
+						return jsonify({"messages":[{"text": "Welcome to the Chatfuel Rockets!"},{"text": "What are you up to?"}]})
 	return "ok", 200
 
 
