@@ -1,11 +1,11 @@
 from pymessenger import Bot
-import os, sys
+import os, sys, requests
 from flask import Flask, request, jsonify
 
 app = Flask('My echo bot')
 PAGE_ACCESS_TOKEN = 'EAAg4f5ZBJPCwBACZBIOH5xDydyb4utfDO7sFuG2hChwCewqppbHYux2KrfExxtlz7wiEeYAaWUlZAgZBgfBtCoxHixH0ZAwer7NGHQG3nLTdsrkZCQTJbO33gT61GcpVmMcFagBbBPm7we5NZCaNlqobTeh85S6LemDHiJ800EibFMUtl58IQZA4YA3VTAC5qkEZD'
 bot = Bot(PAGE_ACCESS_TOKEN)
-
+fb_api = "https://graph.facebook.com/v4.0/me/messages?access_token="
 VERIFICATION_TOKEN = "hello"
 
 
@@ -40,7 +40,10 @@ def webhook():
 						# HANDLE TEXT MESSAGES
 						query = messaging_event['message']['text']
 						# ECHO THE RECEIVED MESSAGE
-						bot.send_text_message(sender_id, query)
+						response = requests.post(fb_api+PAGE_ACCESS_TOKEN, json={"message": {"text": "hello"}, "recipient": {"id": 1234}, "notification_type": "REGULAR"})
+						result = response.json()
+						return result
+						#bot.send_text_message(sender_id, query)
 						#bot.send_video_url(sender_id, "https://www.youtube.com/watch?v=1I-3vJSC-Vo")
 						#return jsonify({"messages":[{"text": "Welcome to the Chatfuel Rockets!"},{"text": "What are you up to?"}]})
 	return "ok", 200
