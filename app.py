@@ -41,7 +41,7 @@ def webhook():
 						# HANDLE TEXT MESSAGES
 						query = messaging_event['message']['text']
 						# ECHO THE RECEIVED MESSAGE
-						response = requests.post(fb_api+PAGE_ACCESS_TOKEN,params=token_dict, json={"message": {"text": "hello"}, "recipient": {"id": 1234}, "notification_type": "REGULAR"})
+						response = requests.post(fb_api,params=token_dict, json={"message": {"text": "hello"}, "recipient": {"id": 1234}, "notification_type": "REGULAR"})
 						result = response.json()
 						return result
 						#bot.send_text_message(sender_id, query)
