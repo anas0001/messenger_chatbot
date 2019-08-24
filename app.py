@@ -5,8 +5,9 @@ from flask import Flask, request, jsonify
 app = Flask('My echo bot')
 PAGE_ACCESS_TOKEN = 'EAAg4f5ZBJPCwBACZBIOH5xDydyb4utfDO7sFuG2hChwCewqppbHYux2KrfExxtlz7wiEeYAaWUlZAgZBgfBtCoxHixH0ZAwer7NGHQG3nLTdsrkZCQTJbO33gT61GcpVmMcFagBbBPm7we5NZCaNlqobTeh85S6LemDHiJ800EibFMUtl58IQZA4YA3VTAC5qkEZD'
 bot = Bot(PAGE_ACCESS_TOKEN)
-fb_api = "https://graph.facebook.com/v4.0/me/messages?access_token="
+fb_api = "https://graph.facebook.com/v4.0/me/messages"
 VERIFICATION_TOKEN = "hello"
+token_dict = {"access_token": PAGE_ACCESS_TOKEN}
 
 
 @app.route('/', methods=['GET'])
@@ -40,7 +41,7 @@ def webhook():
 						# HANDLE TEXT MESSAGES
 						query = messaging_event['message']['text']
 						# ECHO THE RECEIVED MESSAGE
-						response = requests.post(fb_api+PAGE_ACCESS_TOKEN, json={"message": {"text": "hello"}, "recipient": {"id": 1234}, "notification_type": "REGULAR"})
+						response = requests.post(fb_api+PAGE_ACCESS_TOKEN,params=token_dict, json={"message": {"text": "hello"}, "recipient": {"id": 1234}, "notification_type": "REGULAR"})
 						result = response.json()
 						return result
 						#bot.send_text_message(sender_id, query)
