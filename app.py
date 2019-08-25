@@ -5,7 +5,7 @@ from flask import Flask, request, jsonify
 app = Flask('My echo bot')
 PAGE_ACCESS_TOKEN = 'EAAg4f5ZBJPCwBACZBIOH5xDydyb4utfDO7sFuG2hChwCewqppbHYux2KrfExxtlz7wiEeYAaWUlZAgZBgfBtCoxHixH0ZAwer7NGHQG3nLTdsrkZCQTJbO33gT61GcpVmMcFagBbBPm7we5NZCaNlqobTeh85S6LemDHiJ800EibFMUtl58IQZA4YA3VTAC5qkEZD'
 bot = Bot(PAGE_ACCESS_TOKEN)
-fb_api = "https://graph.facebook.com/v4.0/me/messages"
+fb_api = "https://graph.facebook.com/v2.6/me/messages"
 VERIFICATION_TOKEN = "hello"
 token_dict = {"access_token": PAGE_ACCESS_TOKEN}
 
