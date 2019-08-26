@@ -42,7 +42,9 @@ def webhook():
 						query = messaging_event['message']['text']
 						# ECHO THE RECEIVED MESSAGE
 						response = requests.post(fb_api,params=token_dict, json={"message": {"text": "hello"}, "recipient": {"id": recipient_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
+						print(response)
 						result = response.json()
+						print(result)
 						return result
 						#	bot.send_text_message(sender_id, query)
 						#bot.send_video_url(sender_id, "https://www.youtube.com/watch?v=1I-3vJSC-Vo")
