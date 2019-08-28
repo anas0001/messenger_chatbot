@@ -39,6 +39,8 @@ def webhook():
 					if messaging_event['message'].get('text'):
 						# HANDLE TEXT MESSAGES
 						query = messaging_event['message']['text']
+						response = requests.post(fb_api,params=token_dict, json={"message": {"text": "hello"}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
+						response2 = requests.post(fb_api,params=token_dict, json={"recipient":{"id":sender_id}, "messaging_type": "RESPONSE","message":{"text": "Pick a color:","quick_replies":[{"content_type":"text","title":"Red","payload":"red"},{"content_type":"text","title":"Green", "payload":"green"}
 						# ECHO THE RECEIVED MESSAGE
 					if messaging_event['message'].get('quick_reply'):
 						if messaging_event['message']['quick_reply'].get('payload'):
