@@ -5,3 +5,4 @@ build/
 dist/
 utils.spec
 __pycache__
+testing.py

@@ -6,8 +6,5 @@ Created on Sat Aug 24 06:11:03 2019
 @author: User
 """
 
-payload = {"message":{"text":"hello"}}
-payload['recipient'] = {'id': 1234}
-payload['notification_type'] = 'REGULAR'
-print(payload)
-
+fb_api = "https://graph.facebook.com/v4.0/me/messages"
+print(fb_api[0:35] + "messenger_profile")
