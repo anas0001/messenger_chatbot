@@ -22,7 +22,7 @@ def verify():
 def webhook():
 	print(request.data)
 	data = request.get_json()
-
+	get_started = requests.post(fb_api,params=token_dict,{"get_started":{"payload":"some bitch clicked the get started button"}})
 	if data['object'] == "page":
 		entries = data['entry']
 
