@@ -53,7 +53,7 @@ def webhook():
 
 def send_get_started():
 	profile_api = fb_api[0:35] + "messenger_profile"
-	get_started = requests.post(fb_api,params=token_dict,{"get_started":{"payload":"some bitch clicked the get started button"}})
+	get_started = requests.post(profile_api,params=token_dict,{"get_started":{"payload":"some bitch clicked the get started button"}})
 
 if __name__ == "__main__":
 	app.run(port=5000, use_reloader = True)
