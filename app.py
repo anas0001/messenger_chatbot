@@ -51,6 +51,7 @@ def webhook():
 						#return jsonify({"messages":[{"text": "Welcome to the Chatfuel Rockets!"},{"text": "What are you up to?"}]})
 	return "ok", 200
 
+@app.route('/', methods=['POST'])
 def send_get_started():
 	profile_api = "https://graph.facebook.com/v4.0/me/messenger_profile"
 	get_started_json= {"get_started":{"payload":"some bitch clicked the get started button"}}
