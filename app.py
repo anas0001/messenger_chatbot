@@ -45,8 +45,8 @@ def webhook():
 				if messaging_event.get('postback'):
 					if messaging_event['postback'].get('title') == 'Get Started':
 						response = requests.post(fb_api,params=token_dict, json={"message": {"text": "Get Started clicked. Go fun yourself. ASSALAM-U-ALAIKUM 🙂\n\n Nigga Nice to meet you. 😊\nDigiSkills Chatbot at your service 🤖 \n\nYou can ask me about DigiSkills Training program."}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
-						response2 = requests.post(fb_api,params=token_dict, json={"recipient":{"id":sender_id}, "messaging_type": "RESPONSE","message":{"text": "","quick_replies":[{"content_type":"text","title":"Next","payload":"nigga clicked next"}]}})
-						#print("get_started", response)
+						response2 = requests.post(fb_api,params=token_dict, json={"recipient":{"id":sender_id}, "messaging_type": "RESPONSE","message":{"text": "text","quick_replies":[{"content_type":"text","title":"Next","payload":"nigga clicked next"}]}})
+						print("quick reply get started", response2)
 
 				elif messaging_event.get('message'):
 					# HANDLE NORMAL MESSAGES HERE
