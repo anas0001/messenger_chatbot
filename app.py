@@ -59,6 +59,7 @@ def webhook():
 def send_get_started():
 	get_started_json= {"get_started":{"payload":"some bitch clicked the get started button"}}
 	get_started = requests.post(profile_api,params=token_dict,data = json.dumps(get_started_json), headers={'Content-Type': 'application/json'})
+	print("get_started", get_started)
 
 #@app.route('/', methods=['POST'])
 #def persistent_menu():
