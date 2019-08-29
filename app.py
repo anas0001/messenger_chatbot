@@ -29,7 +29,7 @@ def webhook():
 	#print("persistent",persistent)
 	#get_started_json= {"get_started":{"payload":"some bitch clicked the get started button"}}
 	#get_started = requests.post(profile_api,params=token_dict,data = json.dumps(get_started_json), headers={'Content-Type': 'application/json'})
-	print("get_started", get_started)
+	#print("get_started", get_started)
 
 	if data['object'] == "page":
 		entries = data['entry']
@@ -45,6 +45,7 @@ def webhook():
 				if messaging_event.get('postback'):
 					if messaging_event['postback'].get('title') == 'Get Started':
 						response = requests.post(fb_api,params=token_dict, json={"message": {"text": "get_started clicked. go fun yourself"}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
+						print("get_started", response)
 
 				elif messaging_event.get('message'):
 					# HANDLE NORMAL MESSAGES HERE
