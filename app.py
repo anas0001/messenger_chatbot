@@ -59,7 +59,7 @@ def webhook():
 							response2 = requests.post(fb_api,params=token_dict, json={"recipient":{"id":sender_id}, "messaging_type": "RESPONSE","message":{"text": "You can also search your query through given cards & buttons below. \n👇👇👇.","quick_replies":[{"content_type":"text","title":"Continue","payload":"nigga clicked continue"}]}})
 
 					# HANDLE NORMAL MESSAGES HERE
-					if messaging_event['message'].get('text'):
+					elif messaging_event['message'].get('text'):
 						# HANDLE TEXT MESSAGES
 						query = messaging_event['message']['text']
 						response = requests.post(fb_api,params=token_dict, json={"message": {"text": "hello"}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
