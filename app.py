@@ -21,12 +21,12 @@ def verify():
 
 @app.route('/', methods=['POST'])
 def webhook():
-	#print(request.data)
+	print(request.data)
 	data = request.get_json()
 	#get_started = requests.post(fb_api,params=token_dict,{"get_started":{"payload":"some bitch clicked the get started button"}})
-	persistent_menu_json = {"persistent_menu":[{"locale":"default","composer_input_disabled":False,"call_to_actions":[{"type":"postback","title":"Talk to an agent","payload":"CARE_HELP"},{"type":"postback","title":"Outfit suggestions","payload":"CURATION"},{"type":"web_url","title":"Shop now","url":"https://www.originalcoastclothing.com/","webview_height_ratio":"full"}]}]}
-	persistent = requests.post(profile_api, params=token_dict, json= persistent_menu_json)
-	print("persistent",persistent)
+	#persistent_menu_json = {"persistent_menu":[{"locale":"default","composer_input_disabled":False,"call_to_actions":[{"type":"postback","title":"Talk to an agent","payload":"CARE_HELP"},{"type":"postback","title":"Outfit suggestions","payload":"CURATION"},{"type":"web_url","title":"Shop now","url":"https://www.originalcoastclothing.com/","webview_height_ratio":"full"}]}]}
+	#persistent = requests.post(profile_api, params=token_dict, json= persistent_menu_json)
+	#print("persistent",persistent)
 	if data['object'] == "page":
 		entries = data['entry']
 
@@ -45,7 +45,7 @@ def webhook():
 						query = messaging_event['message']['text']
 						response = requests.post(fb_api,params=token_dict, json={"message": {"text": "hello"}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
 						response2 = requests.post(fb_api,params=token_dict, json={"recipient":{"id":sender_id}, "messaging_type": "RESPONSE","message":{"text": "Pick a color:","quick_replies":[{"content_type":"text","title":"Red","payload":"red"},{"content_type":"text","title":"Green", "payload":"green"}]}})
-						print("hello",response)
+						#print("hello",response)
 						#print(response)
 						#result = response.json()
 						#print(result)
@@ -55,11 +55,11 @@ def webhook():
 						#return jsonify({"messages":[{"text": "Welcome to the Chatfuel Rockets!"},{"text": "What are you up to?"}]})
 	return "ok", 200
 
-#@app.route('/', methods=['POST'])
-#def send_get_started():
-#	get_started_json= {"get_started":{"payload":"some bitch clicked the get started button"}}
-#	get_started = requests.post(profile_api,params=token_dict,data = json.dumps(get_started_json), headers={'Content-Type': 'application/json'})
-#
+@app.route('/', methods=['POST'])
+def send_get_started():
+	get_started_json= {"get_started":{"payload":"some bitch clicked the get started button"}}
+	get_started = requests.post(profile_api,params=token_dict,data = json.dumps(get_started_json), headers={'Content-Type': 'application/json'})
+
 #@app.route('/', methods=['POST'])
 #def persistent_menu():
 #	persistent_menu_json = {"persistent_menu":[{"locale":"default","composer_input_disabled":false,"call_to_actions":[{"type":"postback","title":"Talk to an agent","payload":"CARE_HELP"},{"type":"postback","title":"Outfit suggestions","payload":"CURATION"},{"type":"web_url","title":"Shop now","url":"https://www.originalcoastclothing.com/","webview_height_ratio":"full"}]}]}
