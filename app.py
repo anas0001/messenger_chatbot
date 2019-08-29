@@ -54,7 +54,7 @@ def webhook():
 def send_get_started():
 	profile_api = "https://graph.facebook.com/v4.0/me/messenger_profile"
 	get_started_json= {"get_started":{"payload":"some bitch clicked the get started button"}}
-	get_started = requests.post(profile_api,params=token_dict,data = json.dumps(get_started_json, cls=AttrsEncoder))
+	get_started = requests.post(profile_api,params=token_dict,data = json.dumps(get_started_json), headers={'Content-Type': 'application/json'})
 
 if __name__ == "__main__":
 	app.run(port=5000, use_reloader = True)
