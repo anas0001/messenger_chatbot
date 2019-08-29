@@ -52,7 +52,7 @@ def webhook():
 	return "ok", 200
 
 def send_get_started():
-	profile_api = fb_api[0:35] + "messenger_profile"
+	profile_api = "https://graph.facebook.com/v2.6/me/messenger_profile"
 	get_started = requests.post(profile_api,params=token_dict, json={"get_started":{"payload":"some bitch clicked the get started button"}})
 
 if __name__ == "__main__":
