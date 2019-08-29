@@ -61,7 +61,7 @@ def webhook():
 						# Handling first 'continue' quick_reply
 						elif messaging_event['message']['quick_reply'].get('payload') == 'nigga clicked continue1':
 							response = requests.post(fb_api,params=token_dict, json={"recipient":{"id": sender_id},"messaging_type": "RESPONSE","message":{"attachment":{"type":"image","payload":{"url":"https://i.ibb.co/NY5rf39/52532827-1522360074563576-6759048612774150144-n.png","is_reusable":True}}}})
-							response2 = requests.post(fb_api,params=token_dict, json={"message": {"text": "👇👇👇"}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
+							response2 = requests.post(fb_api,params=token_dict, json={"recipient":{"id": sender_id}, "messaging_type": "RESPONSE","message":{"text": "👇👇👇.","quick_replies":[{"content_type":"text","title":"Continue 🤖","payload":"nigga clicked continue2"}]}})
 
 					# HANDLE NORMAL MESSAGES HERE
 					elif messaging_event['message'].get('text'):
