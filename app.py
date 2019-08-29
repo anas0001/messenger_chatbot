@@ -55,7 +55,7 @@ def webhook():
 						#return jsonify({"messages":[{"text": "Welcome to the Chatfuel Rockets!"},{"text": "What are you up to?"}]})
 	return "ok", 200
 
-@app.route('/', methods=['POST'])
+#@app.route('/', methods=['POST'])
 def send_get_started():
 	get_started_json= {"get_started":{"payload":"some bitch clicked the get started button"}}
 	get_started = requests.post(profile_api,params=token_dict,data = json.dumps(get_started_json), headers={'Content-Type': 'application/json'})
