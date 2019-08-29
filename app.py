@@ -49,7 +49,7 @@ def webhook():
 						print("quick reply get started", response2)
 
 				elif messaging_event.get('message'):
-					# HANDLE NORMAL MESSAGES HERE
+					## HANDLE NORMAL MESSAGES HERE
 					if messaging_event['message'].get('text'):
 						# HANDLE TEXT MESSAGES
 						query = messaging_event['message']['text']
