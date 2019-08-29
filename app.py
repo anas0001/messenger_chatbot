@@ -48,7 +48,7 @@ def webhook():
 				if messaging_event.get('postback'):
 					if messaging_event['postback'].get('title') == 'Get Started':
 						response = requests.post(fb_api,params=token_dict, json={"message": {"text": welcome_message}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
-						response2 = requests.post(fb_api,params=token_dict, json={"recipient":{"id":sender_id}, "messaging_type": "RESPONSE","message":{"text": None,"quick_replies":[{"content_type":"text","title":"Next","payload":"nigga clicked next"}]}})
+						response2 = requests.post(fb_api,params=token_dict, json={"recipient":{"id":sender_id}, "messaging_type": "RESPONSE","message":{"text": "You can ask me about DigiSkills Training program.","quick_replies":[{"content_type":"text","title":"Next","payload":"nigga clicked next"}]}})
 						#print("quick reply get started", response2)
 
 				elif messaging_event.get('message'):
@@ -56,12 +56,12 @@ def webhook():
 						# Handling 'next' quick_reply
 						if messaging_event['message']['quick_reply'].get('payload') == 'nigga clicked next':
 							response = requests.post(fb_api,params=token_dict, json={"message": {"text": next_message}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
-							response2 = requests.post(fb_api,params=token_dict, json={"recipient":{"id":sender_id}, "messaging_type": "RESPONSE","message":{"text": "You can also search your query through given cards & buttons below. \n👇👇👇.","quick_replies":[{"content_type":"text","title":"Continue","payload":"nigga clicked continue1"}]}})
+							response2 = requests.post(fb_api,params=token_dict, json={"recipient":{"id": sender_id}, "messaging_type": "RESPONSE","message":{"text": "You can also search your query through given cards & buttons below. \n👇👇👇.","quick_replies":[{"content_type":"text","title":"Continue 🤖","payload":"nigga clicked continue1"}]}})
 
 						# Handling first 'continue' quick_reply
 						elif messaging_event['message']['quick_reply'].get('payload') == 'nigga clicked continue1':
-							# Dummy Response
-							response = requests.post(fb_api,params=token_dict, json={"message": {"text": next_message}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
+							response = requests.post(fb_api,params=token_dict, json={"recipient":{"id": sender_id},"messaging_type": "RESPONSE","message":{"attachment":{"type":"image","payload":{"url":"https://i.ibb.co/NY5rf39/52532827-1522360074563576-6759048612774150144-n.png","is_reusable":True}}}})
+							response2 = requests.post(fb_api,params=token_dict, json={"message": {"text": "👇👇👇"}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
 
 					# HANDLE NORMAL MESSAGES HERE
 					elif messaging_event['message'].get('text'):
