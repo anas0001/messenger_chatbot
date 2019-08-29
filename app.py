@@ -42,7 +42,11 @@ def webhook():
 				sender_id = messaging_event['sender']['id']
 				recipient_id = messaging_event['recipient']['id']
 
-				if messaging_event.get('message'):
+				if messaging_event.get('postback'):
+					if messaging_event['postback'].get('title') == 'Get Started':
+						response = requests.post(fb_api,params=token_dict, json={"message": {"text": "hello"}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
+
+				elif messaging_event.get('message'):
 					# HANDLE NORMAL MESSAGES HERE
 					if messaging_event['message'].get('text'):
 						# HANDLE TEXT MESSAGES
