@@ -6,6 +6,7 @@ app = Flask('My echo bot')
 PAGE_ACCESS_TOKEN = 'EAAg4f5ZBJPCwBACZBIOH5xDydyb4utfDO7sFuG2hChwCewqppbHYux2KrfExxtlz7wiEeYAaWUlZAgZBgfBtCoxHixH0ZAwer7NGHQG3nLTdsrkZCQTJbO33gT61GcpVmMcFagBbBPm7we5NZCaNlqobTeh85S6LemDHiJ800EibFMUtl58IQZA4YA3VTAC5qkEZD'
 bot = Bot(PAGE_ACCESS_TOKEN)
 fb_api = "https://graph.facebook.com/v4.0/me/messages"
+profile_api = "https://graph.facebook.com/v4.0/me/messenger_profile"
 VERIFICATION_TOKEN = "hello"
 token_dict = {"access_token": PAGE_ACCESS_TOKEN}
 
@@ -53,9 +54,13 @@ def webhook():
 
 @app.route('/', methods=['POST'])
 def send_get_started():
-	profile_api = "https://graph.facebook.com/v2.6/me/thread_settings"
 	get_started_json= {"get_started":{"payload":"some bitch clicked the get started button"}}
 	get_started = requests.post(profile_api,params=token_dict,data = json.dumps(get_started_json), headers={'Content-Type': 'application/json'})
+
+@app.route('/', methods=['POST'])
+def persistent_menu():
+	persistent_menu_json = {"persistent_menu":[{"locale":"default","composer_input_disabled":false,"call_to_actions":[{"type":"postback","title":"Talk to an agent","payload":"CARE_HELP"},{"type":"postback","title":"Outfit suggestions","payload":"CURATION"},{"type":"web_url","title":"Shop now","url":"https://www.originalcoastclothing.com/","webview_height_ratio":"full"}]}]}
+	persistent = requests.post(profile_api, params=token_dict, json= persistent_menu_json)
 
 if __name__ == "__main__":
 	app.run(port=5000, use_reloader = True)
