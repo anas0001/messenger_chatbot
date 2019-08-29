@@ -9,6 +9,8 @@ fb_api = "https://graph.facebook.com/v4.0/me/messages"
 profile_api = "https://graph.facebook.com/v4.0/me/messenger_profile"
 VERIFICATION_TOKEN = "hello"
 token_dict = {"access_token": PAGE_ACCESS_TOKEN}
+welcome_message = "Get Started clicked. Go fun yourself. ASSALAM-U-ALAIKUM 🙂\n\n Nigga Nice to meet you. 😊\nDigiSkills Chatbot at your service 🤖"
+next_message = "⚠⚠⚠\nIf you want to chat with a Human just go to Menu with text field of Messenger and click \"Live Chat\" 📱"
 
 """@app.route('/', methods=['GET'])
 def verify():
@@ -42,14 +44,21 @@ def webhook():
 				sender_id = messaging_event['sender']['id']
 				recipient_id = messaging_event['recipient']['id']
 
+				# Handling get_started response
 				if messaging_event.get('postback'):
 					if messaging_event['postback'].get('title') == 'Get Started':
-						response = requests.post(fb_api,params=token_dict, json={"message": {"text": "Get Started clicked. Go fun yourself. ASSALAM-U-ALAIKUM 🙂\n\n Nigga Nice to meet you. 😊\nDigiSkills Chatbot at your service 🤖"}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
+						response = requests.post(fb_api,params=token_dict, json={"message": {"text": welcome_message}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
 						response2 = requests.post(fb_api,params=token_dict, json={"recipient":{"id":sender_id}, "messaging_type": "RESPONSE","message":{"text": "You can ask me about DigiSkills Training program.","quick_replies":[{"content_type":"text","title":"Next","payload":"nigga clicked next"}]}})
 						#print("quick reply get started", response2)
 
 				elif messaging_event.get('message'):
-					## HANDLE NORMAL MESSAGES HERE
+					if messaging_event['message'].get('quick_reply'):
+						# Handling 'next' quick_reply
+						if messaging_event['message']['quick_reply'].get('payload') == 'nigga clicked next':
+							response = requests.post(fb_api,params=token_dict, json={"message": {"text": next_message}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
+							response2 = requests.post(fb_api,params=token_dict, json={"recipient":{"id":sender_id}, "messaging_type": "RESPONSE","message":{"text": "You can also search your query through given cards & buttons below. \n👇👇👇.","quick_replies":[{"content_type":"text","title":"Continue","payload":"nigga clicked continue"}]}})
+
+					# HANDLE NORMAL MESSAGES HERE
 					if messaging_event['message'].get('text'):
 						# HANDLE TEXT MESSAGES
 						query = messaging_event['message']['text']
