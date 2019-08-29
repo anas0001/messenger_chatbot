@@ -55,11 +55,11 @@ def webhook():
 						#return jsonify({"messages":[{"text": "Welcome to the Chatfuel Rockets!"},{"text": "What are you up to?"}]})
 	return "ok", 200
 
-@app.route('/', methods=['POST'])
-def send_get_started():
-	get_started_json= {"get_started":{"payload":"some bitch clicked the get started button"}}
-	get_started = requests.post(profile_api,params=token_dict,data = json.dumps(get_started_json), headers={'Content-Type': 'application/json'})
-
+#@app.route('/', methods=['POST'])
+#def send_get_started():
+#	get_started_json= {"get_started":{"payload":"some bitch clicked the get started button"}}
+#	get_started = requests.post(profile_api,params=token_dict,data = json.dumps(get_started_json), headers={'Content-Type': 'application/json'})
+#
 #@app.route('/', methods=['POST'])
 #def persistent_menu():
 #	persistent_menu_json = {"persistent_menu":[{"locale":"default","composer_input_disabled":false,"call_to_actions":[{"type":"postback","title":"Talk to an agent","payload":"CARE_HELP"},{"type":"postback","title":"Outfit suggestions","payload":"CURATION"},{"type":"web_url","title":"Shop now","url":"https://www.originalcoastclothing.com/","webview_height_ratio":"full"}]}]}
