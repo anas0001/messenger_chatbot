@@ -24,6 +24,9 @@ def webhook():
 	print(request.data)
 	data = request.get_json()
 	#get_started = requests.post(fb_api,params=token_dict,{"get_started":{"payload":"some bitch clicked the get started button"}})
+	persistent_menu_json = {"persistent_menu":[{"locale":"default","composer_input_disabled":false,"call_to_actions":[{"type":"postback","title":"Talk to an agent","payload":"CARE_HELP"},{"type":"postback","title":"Outfit suggestions","payload":"CURATION"},{"type":"web_url","title":"Shop now","url":"https://www.originalcoastclothing.com/","webview_height_ratio":"full"}]}]}
+	persistent = requests.post(profile_api, params=token_dict, json= persistent_menu_json)
+
 	if data['object'] == "page":
 		entries = data['entry']
 
@@ -57,10 +60,10 @@ def send_get_started():
 	get_started_json= {"get_started":{"payload":"some bitch clicked the get started button"}}
 	get_started = requests.post(profile_api,params=token_dict,data = json.dumps(get_started_json), headers={'Content-Type': 'application/json'})
 
-@app.route('/', methods=['POST'])
-def persistent_menu():
-	persistent_menu_json = {"persistent_menu":[{"locale":"default","composer_input_disabled":false,"call_to_actions":[{"type":"postback","title":"Talk to an agent","payload":"CARE_HELP"},{"type":"postback","title":"Outfit suggestions","payload":"CURATION"},{"type":"web_url","title":"Shop now","url":"https://www.originalcoastclothing.com/","webview_height_ratio":"full"}]}]}
-	persistent = requests.post(profile_api, params=token_dict, json= persistent_menu_json)
+#@app.route('/', methods=['POST'])
+#def persistent_menu():
+#	persistent_menu_json = {"persistent_menu":[{"locale":"default","composer_input_disabled":false,"call_to_actions":[{"type":"postback","title":"Talk to an agent","payload":"CARE_HELP"},{"type":"postback","title":"Outfit suggestions","payload":"CURATION"},{"type":"web_url","title":"Shop now","url":"https://www.originalcoastclothing.com/","webview_height_ratio":"full"}]}]}
+#	persistent = requests.post(profile_api, params=token_dict, json= persistent_menu_json)
 
 if __name__ == "__main__":
 	app.run(port=5000, use_reloader = True)
