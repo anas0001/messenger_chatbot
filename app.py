@@ -1,5 +1,5 @@
 from pymessenger import Bot
-import os, sys, requests
+import os, sys, requests, json
 from flask import Flask, request, jsonify
 
 app = Flask('My echo bot')
@@ -53,7 +53,8 @@ def webhook():
 
 def send_get_started():
 	profile_api = "https://graph.facebook.com/v4.0/me/messenger_profile"
-	get_started = requests.post(profile_api,params=token_dict, json={"get_started":{"payload":"some bitch clicked the get started button"}})
+	get_started_json= {"get_started":{"payload":"some bitch clicked the get started button"}}
+	get_started = requests.post(profile_api,params=token_dict,data = json.dumps(get_started_json, cls=AttrsEncoder))
 
 if __name__ == "__main__":
 	app.run(port=5000, use_reloader = True)
