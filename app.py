@@ -112,7 +112,7 @@ def gen_carousel(id):
 	response2 = requests.post(fb_api,params=token_dict, json=carousel_json)
 
 def gen_continue_button(id):
-	response2 = requests.post(fb_api,params=token_dict, json={"recipient":{"id":id}, "messaging_type": "RESPONSE","message":{"text": "\nOnce you're done reading, please click continue to see carousels.","quick_replies":[{"content_type":"text","title":"Continue 🤖","payload":"nigga clicked generic continue"}]}})
+	response2 = requests.post(fb_api,params=token_dict, json={"recipient":{"id":id}, "messaging_type": "RESPONSE","message":{"text": "Once you're done reading, please click continue to see carousels.","quick_replies":[{"content_type":"text","title":"Continue 🤖","payload":"nigga clicked generic continue"}]}})
 
 
 	#print("continue2 carousel", response2)
