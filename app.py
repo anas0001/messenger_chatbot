@@ -57,18 +57,18 @@ def webhook():
 
 				if messaging_event.get('postback'):
 					# Handling get_started response
-					if messaging_event['postback'].get('title') == 'Get Started':
+					if messaging_event['postback'].get('payload') == 'some bitch clicked the get started button':
 						welcome_message(sender_id)
 						#print("quick reply get started", response2)
 
 					#--------------""" Handling Persistent Menu """--------------#
 					# Handling Restart button
-					if messaging_event['postback'].get('payload') == 'stupid ass nigga had the audacity to restart the bot':
+					elif messaging_event['postback'].get('payload') == 'stupid ass nigga had the audacity to restart the bot':
 						welcome_message(sender_id)
 
 					#--------------""" Handling all carousel buttons responses """--------------#
 					# Handling Digiskills Gallery buttons response
-					if messaging_event['postback'].get('payload') == 'stupid ass nigga asked what is digiskills':
+					elif messaging_event['postback'].get('payload') == 'stupid ass nigga asked what is digiskills':
 						response = requests.post(fb_api,params=token_dict, json={"message": {"text": what_is_digiskills}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
 						gen_continue_button(sender_id)
 
