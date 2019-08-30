@@ -17,6 +17,15 @@ welcome_message = "Get Started clicked. Go fun yourself. ASSALAM-U-ALAIKUM 🙂\
 next_message = "⚠⚠⚠\nIf you want to chat with a Human just go to Menu with text field of Messenger and click \"Live Chat\" 📱"
 
 what_is_digiskills = "👇👇👇\n\nDigiSkills Training Program:\n\n✔ Pakistan’s 1st Online\nTraining Program🙌\n\nGoal:\n\n✔ To empower the youth\nwith skills for\nFREELANCE market.\n\nNumber of Courses:\n\n✔ Multiple courses\navailable online.📚\n\nLanguage of Courses:\n\n✔ Mix of Urdu-English\nlanguage to facilitate\nPakistani audience."
+type_of_program = "👇👇👇\nDigiSkills Training Program\n\n✔Initiative by Government of Pakistan\n\n✔Spearheaded by Ministry of IT & Telecom through Ignite\n\n✔Executed by Virtual University of Pakistan."
+benefits_of_program = "👇👇👇\nBenefits\n\n✔Enhance/learn skills that\nare in-demand in FREELANCE market.\n\n✔EARN without looking for a job.💵"
+scope_of_courses = "👇👇👇\n\nEven freelancers can join DigiSkill Training Program to,\n\n✔ Learn new skills to make more money.💵💵\n\n✔ Enhance freelancing portfolio by learning from experienced freelancers and experts.💯\n\nThis course will definitely offer something new and helpful to existing freelancers."
+freelance_work = "👇👇👇\n\nAfter this program trainees:\n\n✔ Would have new set of skills.\n\n✔ Can make online profile on any freelance marketplace.\n\n✔ Can find jobs online through freelancing platforms.\n\nCoaches will help you in creating profile and bidding for the projects in freelance markets.💲💲"
+freelance_jobs = "👇👇👇\n\nThis program will NOT offer jobs to trainees, rather:\n\n✔ It is to train people for skills that are in demand.☺\n\n✔ Enable them to get projects from freelance markets.🏢"
+motivation_cert = "👇👇👇\n\nCertificate:\n\nYES, you will get e-Certificate on completion of course.🏆🎓\n\nIssued by - The Virtual University of Pakistan."
+motivation_proc = "👇👇👇\n\nStudy Procedure:\n\n✔ All content for each module will be available on “DigiSkills Online Learning Platform”.😊\n\n✔ You can self-pace the training.\n\n✔ You can follow announced timetable on Portal📖"
+training_enroll = "👇👇👇\n\nEnrollment Procedure:\n\n1- Sign up by visiting http://DigiSkills.pk/\n\n2- Enroll in 2 courses of your CHOICE.☺\n\nNote:\n\n✔ Enrollment will open one month prior to the commencement of each upcoming batch.\n\n✔ Freelancing is MANDATORY (for first time trainees)‼"
+training_content = "👇👇👇\n\nThe content and videos of each week will be made available on Respective:\n\nMonday by 10AM📅🕙"
 
 carousel_json = {"message":{"attachment":{"type":"template","payload":{"template_type":"generic","elements":[{"title":"DigiSkills","image_url":"https://i.ibb.co/qypcyYQ/Digiskills.jpg","subtitle":"This section will tell you about DigiSkills training program\n👇👇👇","buttons":[{"type":"postback","payload":"stupid ass nigga asked what is digiskills","title":"What is DigiSkills?"},{"type":"postback","title":"Type of Program","payload":"nigga asked type of program"},{"type":"postback","title":"Benefits of Program","payload":"nigga asked benefits of program"}]},{"title":"Freelancing","image_url":"https://i.ibb.co/WgphLjx/freelance.jpg","subtitle":"This section will tell you the scope of Freelancing after any course\n👇👇👇","buttons":[{"type":"postback","title":"Scope of Courses?","payload":"freelance.scope"},{"type":"postback","title":"How can I get Work?","payload":"freelance.work"},{"type":"postback","title":"Do you Offer Jobs?","payload":"freelance.jobs"}]},{"title":"Motivation","image_url":"https://i.ibb.co/FHk5ttP/motivation.jpg","subtitle":"This section will make you understand the scope of offered courses\n👇👇👇","buttons":[{"type":"postback","title":"Certification","payload":"motivation.certification"},{"type":"postback","title":"Studying Procedure","payload":"motivation.procedure"}]},{"title":"Start Training","image_url":"https://i.ibb.co/hcB3YJc/Start-training.jpg","subtitle":"This section will tell you about course enrollment & fee structure\n👇👇👇","buttons":[{"type":"postback","title":"Enroll Courses","payload":"training.enroll"},{"type":"postback","title":"Fee Structure","payload":"training.fee"},{"type":"postback","title":"Content Availability","payload":"training.content"}]},{"title":"Courses","image_url":"https://i.ibb.co/G0rCdmS/courses.png","subtitle":"This section will help you with how you will interact with offered cources?\n👇👇👇","buttons":[{"type":"postback","title":"How to get Training?","payload":"courses.training"},{"type":"postback","title":"Can I ask Questions?","payload":"courses.questions"},{"type":"postback","title":"Course Details?","payload":"courses.details"}]},{"title":"Requirements","image_url":"https://i.ibb.co/KzG0Rjs/requirements.jpg","subtitle":"This section will help you with the requirement for having this course.\n👇👇👇","buttons":[{"type":"postback","title":"Technical","payload":"requirements.technical"},{"type":"postback","title":"Educational","payload":"requirements.educational"}]},{"title":"Batches","image_url":"https://i.ibb.co/wMhqDxc/batch.jpg","subtitle":"This section will tell you about Details of batches\n👇👇👇","buttons":[{"type":"postback","title":"Next Batch","payload":"batches.next"},{"type":"postback","title":"Course Limits","payload":"batches.limits"}]},{"title":"Error Support","image_url":"https://i.ibb.co/X2dqxmY/error-support.jpg","subtitle":"This section will help you to figure out the solution of your related error\n👇👇👇","buttons":[{"type":"postback","title":"Error Support","payload":"error support"}]},{"title":"Other Questions","image_url":"https://i.ibb.co/gF1mCjP/other-question.jpg","subtitle":"More Questions","buttons":[{"type":"postback","title":"How can I signup?","payload":"questions.signup"},{"type":"postback","title":"Upcoming Courses?","payload":"questions.courses"},{"type":"postback","title":"Course Selection?","payload":"questions.selection"}]},{"title":"Live Chat","image_url":"https://i.ibb.co/D4zDSXx/live-chat.jpg","subtitle":"If you want to interact with a human operator please click below\n👇👇👇","buttons":[{"type":"postback","title":"Live Chat","payload":"live chat"}]}]}}}}
 
@@ -66,11 +75,49 @@ def webhook():
 					elif messaging_event['postback'].get('payload') == 'stupid ass nigga had the audacity to restart the bot':
 						welcome_msg(sender_id)
 
+					# Handling Live Chat button
+					elif messaging_event['postback'].get('payload') == 'stupid ass nigga asking for a real human being to talk':
+						gen_carousel(id)
+
 					#--------------""" Handling all carousel buttons responses """--------------#
 					# Handling Digiskills Gallery buttons response
 					elif messaging_event['postback'].get('payload') == 'stupid ass nigga asked what is digiskills':
 						response = requests.post(fb_api,params=token_dict, json={"message": {"text": what_is_digiskills}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
-						gen_continue_button(sender_id)
+						
+					elif messaging_event['postback'].get('payload') == 'nigga asked type of program':
+						response = requests.post(fb_api,params=token_dict, json={"message": {"text": type_of_program}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
+
+					elif messaging_event['postback'].get('payload') == 'nigga asked benefits of program':
+						response = requests.post(fb_api,params=token_dict, json={"message": {"text": benefits_of_program}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
+
+					# Handling Freelancing Gallery buttons response
+					elif messaging_event['postback'].get('payload') == 'freelance.scope':
+						response = requests.post(fb_api,params=token_dict, json={"message": {"text": scope_of_courses}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
+
+					elif messaging_event['postback'].get('payload') == 'freelance.work':
+						response = requests.post(fb_api,params=token_dict, json={"message": {"text": freelance_work}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
+
+					elif messaging_event['postback'].get('payload') == 'freelance.jobs':
+						response = requests.post(fb_api,params=token_dict, json={"message": {"text": freelance_jobs}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
+
+					# Handling Motivation Gallery buttons response
+					elif messaging_event['postback'].get('payload') == 'motivation.certification':
+						response = requests.post(fb_api,params=token_dict, json={"message": {"text": motivation_cert}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
+
+					elif messaging_event['postback'].get('payload') == 'motivation.procedure':
+						response = requests.post(fb_api,params=token_dict, json={"message": {"text": motivation_proc}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
+
+					# Handling Start Training Gallery buttons response
+					elif messaging_event['postback'].get('payload') == 'training.enroll':
+						response = requests.post(fb_api,params=token_dict, json={"message": {"text": training_enroll}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
+
+					elif messaging_event['postback'].get('payload') == 'training.fee':
+						response = requests.post(fb_api,params=token_dict, json={"message": {"text": "👇👇👇\n\n💯FREE!! 😊\nJust signup and start training!"}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
+
+					elif messaging_event['postback'].get('payload') == 'training.content':
+						response = requests.post(fb_api,params=token_dict, json={"message": {"text": training_content}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
+
+					gen_continue_button(sender_id)
 
 				elif messaging_event.get('message'):
 					if messaging_event['message'].get('quick_reply'):
