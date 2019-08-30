@@ -26,8 +26,9 @@ def webhook():
 	print(request.data)
 	data = request.get_json()
 	#get_started = requests.post(fb_api,params=token_dict,{"get_started":{"payload":"some bitch clicked the get started button"}})
+	persis_json = {"persistent_menu":[{"locale":"default","composer_input_disabled":false,"call_to_actions":[{"type":"postback","title":"Restart","payload":"stupid ass nigga had the audacity to restart the bot"},{"type":"postback","title":"Live Chat","payload":"stupid ass nigga asking for a real human being to talk"}]}]}
 	#persistent_menu_json = {"persistent_menu":[{"locale":"default","composer_input_disabled":False,"call_to_actions":[{"type":"postback","title":"Talk to an agent","payload":"CARE_HELP"},{"type":"postback","title":"Outfit suggestions","payload":"CURATION"},{"type":"web_url","title":"Shop now","url":"https://www.originalcoastclothing.com/","webview_height_ratio":"full"}]}]}
-	#persistent = requests.post(profile_api, params=token_dict, json= persistent_menu_json)
+	persistent = requests.post(profile_api, params=token_dict, json= persis_json)
 	#print("persistent",persistent)
 	#get_started_json= {"get_started":{"payload":"some bitch clicked the get started button"}}
 	#get_started = requests.post(profile_api,params=token_dict,data = json.dumps(get_started_json), headers={'Content-Type': 'application/json'})
@@ -44,12 +45,14 @@ def webhook():
 				sender_id = messaging_event['sender']['id']
 				recipient_id = messaging_event['recipient']['id']
 
-				# Handling get_started response
 				if messaging_event.get('postback'):
+					# Handling get_started response
 					if messaging_event['postback'].get('title') == 'Get Started':
 						response = requests.post(fb_api,params=token_dict, json={"message": {"text": welcome_message}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
 						response2 = requests.post(fb_api,params=token_dict, json={"recipient":{"id":sender_id}, "messaging_type": "RESPONSE","message":{"text": "You can ask me about DigiSkills Training program.","quick_replies":[{"content_type":"text","title":"Next","payload":"nigga clicked next"}]}})
 						#print("quick reply get started", response2)
+
+
 
 				elif messaging_event.get('message'):
 					if messaging_event['message'].get('quick_reply'):
