@@ -58,13 +58,13 @@ def webhook():
 				if messaging_event.get('postback'):
 					# Handling get_started response
 					if messaging_event['postback'].get('title') == 'Get Started':
-						welcome_message(sender_id, welcome_message)
+						welcome_message(sender_id)
 						#print("quick reply get started", response2)
 
 					#--------------""" Handling Persistent Menu """--------------#
 					# Handling Restart button
 					if messaging_event['postback'].get('payload') == 'stupid ass nigga had the audacity to restart the bot':
-						welcome_message(sender_id, welcome_message)
+						welcome_message(sender_id)
 
 					#--------------""" Handling all carousel buttons responses """--------------#
 					# Handling Digiskills Gallery buttons response
@@ -120,8 +120,8 @@ def gen_carousel(id):
 def gen_continue_button(id):
 	response2 = requests.post(fb_api,params=token_dict, json={"recipient":{"id": id}, "messaging_type": "RESPONSE","message":{"text": "Once you're done reading, please click continue to see carousels.","quick_replies":[{"content_type":"text","title":"Continue 🤖","payload":"nigga clicked generic continue"}]}})
 
-def welcome_message(id, message):
-	response = requests.post(fb_api,params=token_dict, json={"message": {"text": message}, "recipient": {"id": id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
+def welcome_message(id):
+	response = requests.post(fb_api,params=token_dict, json={"message": {"text": welcome_message}, "recipient": {"id": id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
 	response2 = requests.post(fb_api,params=token_dict, json={"recipient":{"id": id}, "messaging_type": "RESPONSE","message":{"text": "You can ask me about DigiSkills Training program.","quick_replies":[{"content_type":"text","title":"Next","payload":"nigga clicked next"}]}})
 
 	#print("continue2 carousel", response2)
