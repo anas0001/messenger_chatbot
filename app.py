@@ -34,10 +34,12 @@ def webhook():
 	print(request.data)
 	data = request.get_json()
 	##get_started = requests.post(fb_api,params=token_dict,{"get_started":{"payload":"some bitch clicked the get started button"}})
-	persis_json = {"persistent_menu":[{"locale":"default","composer_input_disabled":False,"call_to_actions":[{"type":"postback","title":"Restart","payload":"stupid ass nigga had the audacity to restart the bot"},{"type":"postback","title":"Live Chat","payload":"stupid ass nigga asking for a real human being to talk"}]}]}
+	######
+	######persis_json = {"persistent_menu":[{"locale":"default","composer_input_disabled":False,"call_to_actions":[{"type":"postback","title":"Restart","payload":"stupid ass nigga had the audacity to restart the bot"},{"type":"postback","title":"Live Chat","payload":"stupid ass nigga asking for a real human being to talk"}]}]}
 	#persistent_menu_json = {"persistent_menu":[{"locale":"default","composer_input_disabled":False,"call_to_actions":[{"type":"postback","title":"Talk to an agent","payload":"CARE_HELP"},{"type":"postback","title":"Outfit suggestions","payload":"CURATION"},{"type":"web_url","title":"Shop now","url":"https://www.originalcoastclothing.com/","webview_height_ratio":"full"}]}]}
-	persistent = requests.post(profile_api, params=token_dict, json= persis_json)
-	print("persistent-----------------------",persistent)
+	#####
+	#####persistent = requests.post(profile_api, params=token_dict, json= persis_json)
+	#####print("persistent-----------------------",persistent)
 	#get_started_json= {"get_started":{"payload":"some bitch clicked the get started button"}}
 	#get_started = requests.post(profile_api,params=token_dict,data = json.dumps(get_started_json), headers={'Content-Type': 'application/json'})
 	#print("get_started", get_started)
@@ -56,11 +58,15 @@ def webhook():
 				if messaging_event.get('postback'):
 					# Handling get_started response
 					if messaging_event['postback'].get('title') == 'Get Started':
-						response = requests.post(fb_api,params=token_dict, json={"message": {"text": welcome_message}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
-						response2 = requests.post(fb_api,params=token_dict, json={"recipient":{"id":sender_id}, "messaging_type": "RESPONSE","message":{"text": "You can ask me about DigiSkills Training program.","quick_replies":[{"content_type":"text","title":"Next","payload":"nigga clicked next"}]}})
+						welcome_message(sender_id, welcome_message)
 						#print("quick reply get started", response2)
 
-					#--------------""" Handling all carousel buttons responses"""--------------#
+					#--------------""" Handling Persistent Menu """--------------#
+					# Handling Restart button
+					if messaging_event['postback'].get('payload') == 'stupid ass nigga had the audacity to restart the bot':
+						welcome_message(sender_id, welcome_message)
+
+					#--------------""" Handling all carousel buttons responses """--------------#
 					# Handling Digiskills Gallery buttons response
 					if messaging_event['postback'].get('payload') == 'stupid ass nigga asked what is digiskills':
 						response = requests.post(fb_api,params=token_dict, json={"message": {"text": what_is_digiskills}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
@@ -112,8 +118,11 @@ def gen_carousel(id):
 	response2 = requests.post(fb_api,params=token_dict, json=carousel_json)
 
 def gen_continue_button(id):
-	response2 = requests.post(fb_api,params=token_dict, json={"recipient":{"id":id}, "messaging_type": "RESPONSE","message":{"text": "Once you're done reading, please click continue to see carousels.","quick_replies":[{"content_type":"text","title":"Continue 🤖","payload":"nigga clicked generic continue"}]}})
+	response2 = requests.post(fb_api,params=token_dict, json={"recipient":{"id": id}, "messaging_type": "RESPONSE","message":{"text": "Once you're done reading, please click continue to see carousels.","quick_replies":[{"content_type":"text","title":"Continue 🤖","payload":"nigga clicked generic continue"}]}})
 
+def welcome_message(id, message):
+	response = requests.post(fb_api,params=token_dict, json={"message": {"text": message}, "recipient": {"id": id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
+	response2 = requests.post(fb_api,params=token_dict, json={"recipient":{"id": id}, "messaging_type": "RESPONSE","message":{"text": "You can ask me about DigiSkills Training program.","quick_replies":[{"content_type":"text","title":"Next","payload":"nigga clicked next"}]}})
 
 	#print("continue2 carousel", response2)
 #	get_started_json= {"get_started":{"payload":"some bitch clicked the get started button"}}
