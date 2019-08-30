@@ -68,22 +68,25 @@ def webhook():
 					# Handling get_started response
 					if messaging_event['postback'].get('payload') == 'some bitch clicked the get started button':
 						welcome_msg(sender_id)
+						return "ok", 200
 						#print("quick reply get started", response2)
 
 					#--------------""" Handling Persistent Menu """--------------#
 					# Handling Restart button
 					elif messaging_event['postback'].get('payload') == 'stupid ass nigga had the audacity to restart the bot':
 						welcome_msg(sender_id)
+						return "ok", 200
 
 					# Handling Live Chat button
 					elif messaging_event['postback'].get('payload') == 'stupid ass nigga asking for a real human being to talk':
 						gen_carousel(id)
+						return "ok", 200
 
 					#--------------""" Handling all carousel buttons responses """--------------#
 					# Handling Digiskills Gallery buttons response
 					elif messaging_event['postback'].get('payload') == 'stupid ass nigga asked what is digiskills':
 						response = requests.post(fb_api,params=token_dict, json={"message": {"text": what_is_digiskills}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
-						
+
 					elif messaging_event['postback'].get('payload') == 'nigga asked type of program':
 						response = requests.post(fb_api,params=token_dict, json={"message": {"text": type_of_program}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
 
