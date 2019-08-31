@@ -134,6 +134,11 @@ def webhook():
 					elif messaging_event['postback'].get('payload') == 'courses.training':
 						response = requests.post(fb_api,params=token_dict, json={"message": {"text": courses_training}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
 
+					elif messaging_event['postback'].get('payload') == 'courses.questions':
+						response = requests.post(fb_api,params=token_dict, json={"message": {"text": courses_questions}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
+						#response2 = requests.post(fb_api,params=token_dict, json={"recipient":{"id": id}, "messaging_type": "RESPONSE","message":{"text": "You can ask me about DigiSkills Training program.","quick_replies":[{"content_type":"text","title":"Continue Reading 🤖","payload":"nigga clicked continue reading"}]}})
+						#return "ok", 200
+
 					elif messaging_event['postback'].get('payload') == 'courses.details':
 						response = requests.post(fb_api,params=token_dict, json={"message": {"text": courses_details}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
 
@@ -162,11 +167,6 @@ def webhook():
 						response = requests.post(fb_api,params=token_dict, json={"message": {"text": questions_selection}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
 
 					gen_continue_button(sender_id)
-
-					elif messaging_event['postback'].get('payload') == 'courses.questions':
-						response = requests.post(fb_api,params=token_dict, json={"message": {"text": courses_questions}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
-						response2 = requests.post(fb_api,params=token_dict, json={"recipient":{"id": id}, "messaging_type": "RESPONSE","message":{"text": "You can ask me about DigiSkills Training program.","quick_replies":[{"content_type":"text","title":"Continue Reading 🤖","payload":"nigga clicked continue reading"}]}})
-						return "ok", 200
 
 				elif messaging_event.get('message'):
 					if messaging_event['message'].get('quick_reply'):
