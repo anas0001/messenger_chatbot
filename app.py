@@ -75,7 +75,8 @@ def webhook():
 				recipient_id = messaging_event['recipient']['id']
 
 				response = requests.get(psid_url+sender_id + "?fields=name&access_token=" + PAGE_ACCESS_TOKEN)
-				name = response.content['name']
+				print("-----------------------------",response)
+				#name = response.content['name']
 
 				if messaging_event.get('postback'):
 					# Handling get_started response
