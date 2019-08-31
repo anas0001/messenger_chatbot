@@ -28,9 +28,10 @@ training_enroll = "👇👇👇\n\nEnrollment Procedure:\n\n1- Sign up by visiti
 training_content = "👇👇👇\n\nThe content and videos of each week will be made available on Respective:\n\nMonday by 10AM📅🕙"
 courses_training = "👇👇👇\n\nOnline Training Program\n\nStep 1: Sign-up👍\n\nStep 2: Enroll the courses you want.👍\n\nDigiSkills Online Learning Management System\n\n✔All content you are enrolled in will be available\n✔Access it from anywhere\n✔Need a computer with internet\n\nTimetable\n\nSelf-pace or follow the announced timetable 😊"
 courses_questions = "👇👇👇\n\nYou can ask questions using:\n\n- DigiSkills Learning Management System\n- Digiskills.pk CONTACT US page."
+courses_questions_continue = "✔ Interfaces are available where you can ask questions.\n\n1: Discussion boards📄:\n\nIf you are an enrolled trainee then visit discussion board of LMS to:\n\n- Post your query\n- Ask question\n- Help other trainees by commenting on their queries\n- See previous queries related to that specific topic\n\n2: Online support📶:\n\nYou can ask:\n\n- general queries related to LMS\n- Course\n- Other matters related to DigiSkills.pk\n\n3: Mobile phone number📞:\n- Call on +92 311-111-3444"
 courses_details = "👇👇👇\n\nThere are 10 courses that are being offered in this program:📚\n\n1. Freelancing\n2. E-Commerce Management\n3. Creative Writing\n4. Graphics Design\n5. QuickBooks\n6.	WordPress\n7. AutoCAD\n8. Search Engine Optimization(SEO)\n9. Digital Marketing\n10. Digital Literacy"
 requirements_technical = "👇👇👇\n\nAll you need is:\n\n✔ Stable internet connection📶\n\n✔ Working computer (Desktop or laptop). 💻\n\nNote:\n\nTraining on phone calls ☎ is NOT available.❌"
-requirements_educational = "👇👇👇\n\nEducational requirement:\n\nAnyone who can,\n✔ Understand English.\n✔ Read.\n✔  Write.\n\nBuild your future as a FREELANCER!☺"
+requirements_educational = "👇👇👇\n\nEducational requirement:\n\nAnyone who can,\n✔ Understand English.\n✔ Read.\n✔ Write.\n\nBuild your future as a FREELANCER!☺"
 batches_next = "👇👇👇\n\nEnrollments will start from: November 01, 2018📅\n\nTraining will start from: December 01, 2018📅"
 batches_limits = "👇👇👇\n\nCourses Offered📚:\n✔ 10 courses\n\nCourse per Batch:\n✔ Maximum 2 courses.\n✔ For all courses, training can be done in 5 batches.\n\nLimit Reason:\n✔ Trainee gets the maximum value out of the courses.\n✔ Actively participates in discussions, coaching and assignments."
 questions_signup = "👇👇👇\n\nTo Signup:\n\n✔ Visit:\n\n http://DigiSkills.pk/ It’s completely FREE!🆓"
@@ -46,7 +47,6 @@ def verify():
 			return "Verification token mismatch", 403
 		return request.args["hub.challenge"], 200
 	return "Hello world", 200"""
-
 
 @app.route('/', methods=['POST'])
 def webhook():
@@ -136,6 +136,7 @@ def webhook():
 
 					elif messaging_event['postback'].get('payload') == 'courses.questions':
 						response = requests.post(fb_api,params=token_dict, json={"message": {"text": courses_questions}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
+						response2 = requests.post(fb_api,params=token_dict, json={"recipient":{"id": id}, "messaging_type": "RESPONSE","message":{"text": "You can ask me about DigiSkills Training program.","quick_replies":[{"content_type":"text","title":"Continue Reading 🤖","payload":"nigga clicked continue reading"}]}})
 
 					elif messaging_event['postback'].get('payload') == 'courses.details':
 						response = requests.post(fb_api,params=token_dict, json={"message": {"text": courses_details}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
@@ -164,7 +165,6 @@ def webhook():
 					elif messaging_event['postback'].get('payload') == 'questions.selection':
 						response = requests.post(fb_api,params=token_dict, json={"message": {"text": questions_selection}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
 
-
 					gen_continue_button(sender_id)
 
 				elif messaging_event.get('message'):
@@ -184,6 +184,10 @@ def webhook():
 							response = requests.post(fb_api,params=token_dict, json={"message": {"text": "You can find your queries here 🤗 \nPlease swipe left and right \n👈👉"}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
 							print("continue2 text", response)
 							gen_carousel(sender_id)
+
+						elif messaging_event['message']['quick_reply'].get('payload') == 'nigga clicked continue reading':
+							response = requests.post(fb_api,params=token_dict, json={"message": {"text": courses_questions_continue}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
+							gen_continue_button(sender_id)
 
 						elif messaging_event['message']['quick_reply'].get('payload') == 'nigga clicked generic continue':
 							gen_carousel(sender_id)
@@ -213,7 +217,7 @@ def gen_carousel(id):
 	response2 = requests.post(fb_api,params=token_dict, json=carousel_json)
 
 def gen_continue_button(id):
-	response2 = requests.post(fb_api,params=token_dict, json={"recipient":{"id": id}, "messaging_type": "RESPONSE","message":{"text": "Once you're done reading, please click continue to see carousels.","quick_replies":[{"content_type":"text","title":"Continue 🤖","payload":"nigga clicked generic continue"}]}})
+	response2 = requests.post(fb_api,params=token_dict, json={"recipient":{"id": id}, "messaging_type": "RESPONSE","message":{"text": "Once you're done reading, please click 'Continue' to see carousels \n👇👇👇","quick_replies":[{"content_type":"text","title":"Continue 🤖","payload":"nigga clicked generic continue"}]}})
 
 def welcome_msg(id):
 	response = requests.post(fb_api,params=token_dict, json={"message": {"text": welcome_message}, "recipient": {"id": id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
