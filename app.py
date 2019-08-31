@@ -27,7 +27,7 @@ motivation_proc = "👇👇👇\n\nStudy Procedure:\n\n✔ All content for each 
 training_enroll = "👇👇👇\n\nEnrollment Procedure:\n\n1- Sign up by visiting http://DigiSkills.pk/\n\n2- Enroll in 2 courses of your CHOICE.☺\n\nNote:\n\n✔ Enrollment will open one month prior to the commencement of each upcoming batch.\n\n✔ Freelancing is MANDATORY (for first time trainees)‼"
 training_content = "👇👇👇\n\nThe content and videos of each week will be made available on Respective:\n\nMonday by 10AM📅🕙"
 courses_training = "👇👇👇\n\nOnline Training Program\n\nStep 1: Sign-up👍\n\nStep 2: Enroll the courses you want.👍\n\nDigiSkills Online Learning Management System\n\n✔All content you are enrolled in will be available\n✔Access it from anywhere\n✔Need a computer with internet\n\nTimetable\n\nSelf-pace or follow the announced timetable 😊"
-courses_questions_continue = "✔ Interfaces are available where you can ask questions.\n\n1: Discussion boards📄:\n\nIf you are an enrolled trainee then visit discussion board of LMS to:\n\n- Post your query\n- Ask question\n- Help other trainees by commenting on their queries\n- See previous queries related to that specific topic\n\n2: Online support📶:\n\nYou can ask:\n\n- general queries related to LMS\n- Course\n- Other matters related to DigiSkills.pk\n\n3: Mobile phone number📞:\n- Call on +92 311-111-3444" 
+courses_questions_continue = "✔ Interfaces are available where you can ask questions.\n\n1: Discussion boards📄:\n\nIf you are an enrolled trainee then visit discussion board of LMS to:\n\n- Post your query\n- Ask question\n- Help other trainees by commenting on their queries\n- See previous queries related to that specific topic\n\n2: Online support📶:\n\nYou can ask:\n\n- general queries related to LMS\n- Course\n- Other matters related to DigiSkills.pk\n\n3: Mobile phone number📞:\n- Call on +92 311-111-3444"
 courses_details = "👇👇👇\n\nThere are 10 courses that are being offered in this program:📚\n\n1. Freelancing\n2. E-Commerce Management\n3. Creative Writing\n4. Graphics Design\n5. QuickBooks\n6.	WordPress\n7. AutoCAD\n8. Search Engine Optimization(SEO)\n9. Digital Marketing\n10. Digital Literacy"
 requirements_technical = "👇👇👇\n\nAll you need is:\n\n✔ Stable internet connection📶\n\n✔ Working computer (Desktop or laptop). 💻\n\nNote:\n\nTraining on phone calls ☎ is NOT available.❌"
 requirements_educational = "👇👇👇\n\nEducational requirement:\n\nAnyone who can,\n✔ Understand English.\n✔ Read.\n✔ Write.\n\nBuild your future as a FREELANCER!☺"
@@ -43,6 +43,7 @@ carousel_json = {"message":{"attachment":{"type":"template","payload":{"template
 def verify(name):
 	response = requests.get("https://graph.facebook.com/",params=token_dict)
 	print("GET Request:",response)
+	print("--------", name)
 	return "Hello world", 200
 
 @app.route('/', methods=['POST'])
