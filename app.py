@@ -77,7 +77,9 @@ def webhook():
 				if messaging_event.get('postback'):
 					# Handling get_started response
 					if messaging_event['postback'].get('payload') == 'some bitch clicked the get started button':
-						respo = requests.get()
+						response = requests.get(psid_url+sender_id + "?fields=name&access_token=" + PAGE_ACCESS_TOKEN)
+						print("GET response", response)
+						print("response content ----------------------", response.content)
 						welcome_msg(sender_id)
 						return "ok", 200
 						#print("quick reply get started", response2)
@@ -85,9 +87,6 @@ def webhook():
 					#--------------""" Handling Persistent Menu """--------------#
 					# Handling Restart button
 					elif messaging_event['postback'].get('payload') == 'stupid ass nigga had the audacity to restart the bot':
-						response = requests.get(psid_url+sender_id + "?fields=name&access_token=" + PAGE_ACCESS_TOKEN)
-						print("GET response", response)
-						print("response content ----------------------", response.content)
 						welcome_msg(sender_id)
 						return "ok", 200
 
