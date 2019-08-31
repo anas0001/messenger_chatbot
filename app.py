@@ -42,7 +42,7 @@ carousel_json = {"message":{"attachment":{"type":"template","payload":{"template
 @app.route('/<name>', methods=['GET'])
 def verify(name):
 	response = requests.get("https://graph.facebook.com/",params=token_dict)
-	print("GET Request:"response)
+	print("GET Request:",response)
 	return "Hello world", 200
 
 @app.route('/', methods=['POST'])
