@@ -63,9 +63,6 @@ def webhook():
 	#get_started = requests.post(profile_api,params=token_dict,data = json.dumps(get_started_json), headers={'Content-Type': 'application/json'})
 	#print("get_started", get_started)
 
-	response = requests.get(psid_url+sender_id + "?fields=name&access_token=" + PAGE_ACCESS_TOKEN)
-	name = response.content['name']
-
 	if data['object'] == "page":
 		entries = data['entry']
 
@@ -76,6 +73,9 @@ def webhook():
 
 				sender_id = messaging_event['sender']['id']
 				recipient_id = messaging_event['recipient']['id']
+
+				response = requests.get(psid_url+sender_id + "?fields=name&access_token=" + PAGE_ACCESS_TOKEN)
+				name = response.content['name']
 
 				if messaging_event.get('postback'):
 					# Handling get_started response
