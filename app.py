@@ -13,7 +13,7 @@ fb_api = "https://graph.facebook.com/v4.0/me/messages"
 profile_api = "https://graph.facebook.com/v4.0/me/messenger_profile"
 psid_url = "https://graph.facebook.com/"
 
-welcome_message = "Get Started clicked. Go fun yourself. ASSALAM-U-ALAIKUM 🙂\n\n Nigga Nice to meet you. 😊\nDigiSkills Chatbot at your service 🤖"
+welcome_message = "Get Started clicked. Go fun yourself. ASSALAM-U-ALAIKUM 🙂\n\n"
 
 next_message = "⚠⚠⚠\nIf you want to chat with a Human just go to Menu with text field of Messenger and click \"Live Chat\" 📱"
 
@@ -63,6 +63,9 @@ def webhook():
 	#get_started = requests.post(profile_api,params=token_dict,data = json.dumps(get_started_json), headers={'Content-Type': 'application/json'})
 	#print("get_started", get_started)
 
+	response = requests.get(psid_url+sender_id + "?fields=name&access_token=" + PAGE_ACCESS_TOKEN)
+	name = response.content['name']
+
 	if data['object'] == "page":
 		entries = data['entry']
 
@@ -77,17 +80,14 @@ def webhook():
 				if messaging_event.get('postback'):
 					# Handling get_started response
 					if messaging_event['postback'].get('payload') == 'some bitch clicked the get started button':
-						response = requests.get(psid_url+sender_id + "?fields=name&access_token=" + PAGE_ACCESS_TOKEN)
-						print("GET response", response)
-						print("response content ----------------------", response.content)
-						welcome_msg(sender_id)
+						welcome_msg(sender_id, niggas_name = name)
 						return "ok", 200
 						#print("quick reply get started", response2)
 
 					#--------------""" Handling Persistent Menu """--------------#
 					# Handling Restart button
 					elif messaging_event['postback'].get('payload') == 'stupid ass nigga had the audacity to restart the bot':
-						welcome_msg(sender_id)
+						welcome_msg(sender_id, niggas_name = name)
 						return "ok", 200
 
 					# Handling Live Chat button
@@ -220,8 +220,8 @@ def gen_carousel(id):
 def gen_continue_button(id):
 	response2 = requests.post(fb_api,params=token_dict, json={"recipient":{"id": id}, "messaging_type": "RESPONSE","message":{"text": "Once you're done reading, please click 'Continue' to see carousels \n👇👇👇","quick_replies":[{"content_type":"text","title":"Continue 🤖","payload":"nigga clicked generic continue"}]}})
 
-def welcome_msg(id):
-	response = requests.post(fb_api,params=token_dict, json={"message": {"text": welcome_message}, "recipient": {"id": id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
+def welcome_msg(id, niggas_name = "nigga"):
+	response = requests.post(fb_api,params=token_dict, json={"message": {"text": welcome_message + niggas_name + " Nice to meet you. 😊\nDigiSkills Chatbot at your service 🤖"}, "recipient": {"id": id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
 	response2 = requests.post(fb_api,params=token_dict, json={"recipient":{"id": id}, "messaging_type": "RESPONSE","message":{"text": "You can ask me about DigiSkills Training program.","quick_replies":[{"content_type":"text","title":"Next","payload":"nigga clicked next"}]}})
 
 	#print("continue2 carousel", response2)
