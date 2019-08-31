@@ -72,7 +72,7 @@ def webhook():
 			for messaging_event in messaging:
 
 				sender_id = messaging_event['sender']['id']
-				recipient_id = messaging_event['recipient']['id'] 
+				recipient_id = messaging_event['recipient']['id']
 
 				if messaging_event.get('postback'):
 					# Handling get_started response
@@ -137,6 +137,7 @@ def webhook():
 					elif messaging_event['postback'].get('payload') == 'courses.questions':
 						response = requests.post(fb_api,params=token_dict, json={"message": {"text": courses_questions}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
 						response2 = requests.post(fb_api,params=token_dict, json={"recipient":{"id": id}, "messaging_type": "RESPONSE","message":{"text": "You can ask me about DigiSkills Training program.","quick_replies":[{"content_type":"text","title":"Continue Reading 🤖","payload":"nigga clicked continue reading"}]}})
+						return "ok", 200
 
 					elif messaging_event['postback'].get('payload') == 'courses.details':
 						response = requests.post(fb_api,params=token_dict, json={"message": {"text": courses_details}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
