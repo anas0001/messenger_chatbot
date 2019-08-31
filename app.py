@@ -78,7 +78,7 @@ def webhook():
 				print("-----------------------------",response)
 				name = response.content
 				print("-----------------------------",name)
-				name = name['name']
+				name = name["name"]
 				print("-----------------------------",name)
 
 				if messaging_event.get('postback'):
