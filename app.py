@@ -72,7 +72,7 @@ def webhook():
 			for messaging_event in messaging:
 
 				sender_id = messaging_event['sender']['id']
-				recipient_id = messaging_event['recipient']['id']
+				recipient_id = messaging_event['recipient']['id'] 
 
 				if messaging_event.get('postback'):
 					# Handling get_started response
@@ -81,7 +81,7 @@ def webhook():
 						return "ok", 200
 						#print("quick reply get started", response2)
 
-					#--------------""" Handling Persistent Menu """--------------# 
+					#--------------""" Handling Persistent Menu """--------------#
 					# Handling Restart button
 					elif messaging_event['postback'].get('payload') == 'stupid ass nigga had the audacity to restart the bot':
 						welcome_msg(sender_id)
