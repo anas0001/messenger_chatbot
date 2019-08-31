@@ -9,10 +9,9 @@ PAGE_ACCESS_TOKEN = 'EAAg4f5ZBJPCwBACZBIOH5xDydyb4utfDO7sFuG2hChwCewqppbHYux2Krf
 token_dict = {"access_token": PAGE_ACCESS_TOKEN}
 bot = Bot(PAGE_ACCESS_TOKEN)
 
-psid_global = None
-
 fb_api = "https://graph.facebook.com/v4.0/me/messages"
 profile_api = "https://graph.facebook.com/v4.0/me/messenger_profile"
+psid_url = "https://graph.facebook.com/"
 
 welcome_message = "Get Started clicked. Go fun yourself. ASSALAM-U-ALAIKUM 🙂\n\n Nigga Nice to meet you. 😊\nDigiSkills Chatbot at your service 🤖"
 
@@ -41,13 +40,13 @@ questions_selection = "👇👇👇\n\nCourse selection depends on:\n✔ Interes
 
 carousel_json = {"message":{"attachment":{"type":"template","payload":{"template_type":"generic","elements":[{"title":"DigiSkills","image_url":"https://i.ibb.co/qypcyYQ/Digiskills.jpg","subtitle":"This section will tell you about DigiSkills training program\n👇👇👇","buttons":[{"type":"postback","payload":"stupid ass nigga asked what is digiskills","title":"What is DigiSkills?"},{"type":"postback","title":"Type of Program","payload":"nigga asked type of program"},{"type":"postback","title":"Benefits of Program","payload":"nigga asked benefits of program"}]},{"title":"Freelancing","image_url":"https://i.ibb.co/WgphLjx/freelance.jpg","subtitle":"This section will tell you the scope of Freelancing after any course\n👇👇👇","buttons":[{"type":"postback","title":"Scope of Courses?","payload":"freelance.scope"},{"type":"postback","title":"How can I get Work?","payload":"freelance.work"},{"type":"postback","title":"Do you Offer Jobs?","payload":"freelance.jobs"}]},{"title":"Motivation","image_url":"https://i.ibb.co/FHk5ttP/motivation.jpg","subtitle":"This section will make you understand the scope of offered courses\n👇👇👇","buttons":[{"type":"postback","title":"Certification","payload":"motivation.certification"},{"type":"postback","title":"Studying Procedure","payload":"motivation.procedure"}]},{"title":"Start Training","image_url":"https://i.ibb.co/hcB3YJc/Start-training.jpg","subtitle":"This section will tell you about course enrollment & fee structure\n👇👇👇","buttons":[{"type":"postback","title":"Enroll Courses","payload":"training.enroll"},{"type":"postback","title":"Fee Structure","payload":"training.fee"},{"type":"postback","title":"Content Availability","payload":"training.content"}]},{"title":"Courses","image_url":"https://i.ibb.co/G0rCdmS/courses.png","subtitle":"This section will help you with how you will interact with offered cources?\n👇👇👇","buttons":[{"type":"postback","title":"How to get Training?","payload":"courses.training"},{"type":"postback","title":"Can I ask Questions?","payload":"courses.questions"},{"type":"postback","title":"Course Details?","payload":"courses.details"}]},{"title":"Requirements","image_url":"https://i.ibb.co/KzG0Rjs/requirements.jpg","subtitle":"This section will help you with the requirement for having this course.\n👇👇👇","buttons":[{"type":"postback","title":"Technical","payload":"requirements.technical"},{"type":"postback","title":"Educational","payload":"requirements.educational"}]},{"title":"Batches","image_url":"https://i.ibb.co/wMhqDxc/batch.jpg","subtitle":"This section will tell you about Details of batches\n👇👇👇","buttons":[{"type":"postback","title":"Next Batch","payload":"batches.next"},{"type":"postback","title":"Course Limits","payload":"batches.limits"}]},{"title":"Error Support","image_url":"https://i.ibb.co/X2dqxmY/error-support.jpg","subtitle":"This section will help you to figure out the solution of your related error\n👇👇👇","buttons":[{"type":"postback","title":"Error Support","payload":"error support"}]},{"title":"Other Questions","image_url":"https://i.ibb.co/gF1mCjP/other-question.jpg","subtitle":"More Questions","buttons":[{"type":"postback","title":"How can I signup?","payload":"questions.signup"},{"type":"postback","title":"Upcoming Courses?","payload":"questions.courses"},{"type":"postback","title":"Course Selection?","payload":"questions.selection"}]},{"title":"Live Chat","image_url":"https://i.ibb.co/D4zDSXx/live-chat.jpg","subtitle":"If you want to interact with a human operator please click below\n👇👇👇","buttons":[{"type":"postback","title":"Live Chat","payload":"live chat"}]}]}}}}
 
-@app.route('/<name>', methods=['GET'])
-def verify(name):
-	psid_api = "https://graph.facebook.com/" + psid_global
-	response = requests.get(psid_api,params=token_dict)
-	print("GET Request:",response)
-	print("--------", name)
-	return "Hello world", 200
+"""@app.route('/', methods=['GET'])
+def verify():
+	if request.args.get("hub.mode") == "subscribe" and request.args.get("hub.challenge"):
+		if not request.args.get("hub.verify_token") == VERIFICATION_TOKEN:
+			return "Verification token mismatch", 403
+		return request.args["hub.challenge"], 200
+	return "Hello world", 200"""
 
 @app.route('/', methods=['POST'])
 def webhook():
@@ -75,11 +74,10 @@ def webhook():
 				sender_id = messaging_event['sender']['id']
 				recipient_id = messaging_event['recipient']['id']
 
-				psid_global = sender_id
-
 				if messaging_event.get('postback'):
 					# Handling get_started response
 					if messaging_event['postback'].get('payload') == 'some bitch clicked the get started button':
+						respo = requests.get()
 						welcome_msg(sender_id)
 						return "ok", 200
 						#print("quick reply get started", response2)
@@ -87,6 +85,9 @@ def webhook():
 					#--------------""" Handling Persistent Menu """--------------#
 					# Handling Restart button
 					elif messaging_event['postback'].get('payload') == 'stupid ass nigga had the audacity to restart the bot':
+						response = requests.get(psid_url+sender_id + "?fields=name&access_token=" + PAGE_ACCESS_TOKEN)
+						print("GET response", response)
+						print("response content ----------------------", response.content)
 						welcome_msg(sender_id)
 						return "ok", 200
 
