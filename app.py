@@ -9,6 +9,8 @@ PAGE_ACCESS_TOKEN = 'EAAg4f5ZBJPCwBACZBIOH5xDydyb4utfDO7sFuG2hChwCewqppbHYux2Krf
 token_dict = {"access_token": PAGE_ACCESS_TOKEN}
 bot = Bot(PAGE_ACCESS_TOKEN)
 
+psid_global = None
+
 fb_api = "https://graph.facebook.com/v4.0/me/messages"
 profile_api = "https://graph.facebook.com/v4.0/me/messenger_profile"
 
@@ -41,7 +43,8 @@ carousel_json = {"message":{"attachment":{"type":"template","payload":{"template
 
 @app.route('/<name>', methods=['GET'])
 def verify(name):
-	response = requests.get("https://graph.facebook.com/",params=token_dict)
+	psid_api = "https://graph.facebook.com/" + psid_global
+	response = requests.get(psid_api,params=token_dict)
 	print("GET Request:",response)
 	print("--------", name)
 	return "Hello world", 200
@@ -71,6 +74,8 @@ def webhook():
 
 				sender_id = messaging_event['sender']['id']
 				recipient_id = messaging_event['recipient']['id']
+
+				psid_global = sender_id
 
 				if messaging_event.get('postback'):
 					# Handling get_started response
