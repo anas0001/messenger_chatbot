@@ -37,8 +37,12 @@ batches_limits = "👇👇👇\n\nCourses Offered📚:\n✔ 10 courses\n\nCourse
 questions_signup = "👇👇👇\n\nTo Signup:\n\n✔ Visit:\n\n http://DigiSkills.pk/ It’s completely FREE!🆓"
 questions_courses = "👇👇👇\n\nThe upcoming courses are not being offered currently.\n\n✔ To enroll wait for the batch they are offered in.\n\n✔ Signup to get notified.🔔"
 questions_selection = "👇👇👇\n\nCourse selection depends on:\n✔ Interest\n✔ Previous education (Some extent)\n\nCourses:\n✔ All courses are IMPORTANT‼\n✔ Freelancing course is MANDATORY‼\n✔ Choose a course that excited you.😄\n✔ Introduction and learning outcomes are available on web portal."
+video_error1 = "👇👇👇\n\nError Reason:\n\nTab navigation is disabled, and a cross sign is being displayed if you try to click the tabs.❌\n\n"
+video_error2 = "Watch Course Content STEPS:\n\n1. Login to LMS account\n2. Select your course from “My Courses”\n3.  Open the “Course Website”\n4. Click on topic to be redirected to “Topic Info” tab\n5. Click “Next”(Most right side of page)\n6. Solve any Pre-assessment if any.\n7. Click “Next” to be redirected to video tab.\n8.  Watch the video.\n\nNote : Click the NEXT button to see completion status(Tick)✔ or it will remain incomplete(cross)❌."
 
 carousel_json = {"message":{"attachment":{"type":"template","payload":{"template_type":"generic","elements":[{"title":"DigiSkills","image_url":"https://i.ibb.co/qypcyYQ/Digiskills.jpg","subtitle":"This section will tell you about DigiSkills training program\n👇👇👇","buttons":[{"type":"postback","payload":"stupid ass nigga asked what is digiskills","title":"What is DigiSkills?"},{"type":"postback","title":"Type of Program","payload":"nigga asked type of program"},{"type":"postback","title":"Benefits of Program","payload":"nigga asked benefits of program"}]},{"title":"Freelancing","image_url":"https://i.ibb.co/WgphLjx/freelance.jpg","subtitle":"This section will tell you the scope of Freelancing after any course\n👇👇👇","buttons":[{"type":"postback","title":"Scope of Courses?","payload":"freelance.scope"},{"type":"postback","title":"How can I get Work?","payload":"freelance.work"},{"type":"postback","title":"Do you Offer Jobs?","payload":"freelance.jobs"}]},{"title":"Motivation","image_url":"https://i.ibb.co/FHk5ttP/motivation.jpg","subtitle":"This section will make you understand the scope of offered courses\n👇👇👇","buttons":[{"type":"postback","title":"Certification","payload":"motivation.certification"},{"type":"postback","title":"Studying Procedure","payload":"motivation.procedure"}]},{"title":"Start Training","image_url":"https://i.ibb.co/hcB3YJc/Start-training.jpg","subtitle":"This section will tell you about course enrollment & fee structure\n👇👇👇","buttons":[{"type":"postback","title":"Enroll Courses","payload":"training.enroll"},{"type":"postback","title":"Fee Structure","payload":"training.fee"},{"type":"postback","title":"Content Availability","payload":"training.content"}]},{"title":"Courses","image_url":"https://i.ibb.co/G0rCdmS/courses.png","subtitle":"This section will help you with how you will interact with offered cources?\n👇👇👇","buttons":[{"type":"postback","title":"How to get Training?","payload":"courses.training"},{"type":"postback","title":"Can I ask Questions?","payload":"courses.questions"},{"type":"postback","title":"Course Details?","payload":"courses.details"}]},{"title":"Requirements","image_url":"https://i.ibb.co/KzG0Rjs/requirements.jpg","subtitle":"This section will help you with the requirement for having this course.\n👇👇👇","buttons":[{"type":"postback","title":"Technical","payload":"requirements.technical"},{"type":"postback","title":"Educational","payload":"requirements.educational"}]},{"title":"Batches","image_url":"https://i.ibb.co/wMhqDxc/batch.jpg","subtitle":"This section will tell you about Details of batches\n👇👇👇","buttons":[{"type":"postback","title":"Next Batch","payload":"batches.next"},{"type":"postback","title":"Course Limits","payload":"batches.limits"}]},{"title":"Error Support","image_url":"https://i.ibb.co/X2dqxmY/error-support.jpg","subtitle":"This section will help you to figure out the solution of your related error\n👇👇👇","buttons":[{"type":"postback","title":"Error Support","payload":"error support"}]},{"title":"Other Questions","image_url":"https://i.ibb.co/gF1mCjP/other-question.jpg","subtitle":"More Questions","buttons":[{"type":"postback","title":"How can I signup?","payload":"questions.signup"},{"type":"postback","title":"Upcoming Courses?","payload":"questions.courses"},{"type":"postback","title":"Course Selection?","payload":"questions.selection"}]},{"title":"Live Chat","image_url":"https://i.ibb.co/D4zDSXx/live-chat.jpg","subtitle":"If you want to interact with a human operator please click below\n👇👇👇","buttons":[{"type":"postback","title":"Live Chat","payload":"live chat"}]}]}}}}
+
+error_json = {"recipient":{"id":"sender_id"},"message":{"attachment":{"type":"template","payload":{"template_type":"generic","elements":[{"title":"Video Error","image_url":"https://i.ibb.co/LRSRdj4/video-error.png","buttons":[{"type":"postback","payload":"stupid ass nigga unable to load video","title":"Unable to Load Video"}]},{"title":"Sign In Error","image_url":"https://i.ibb.co/3cYJYD6/signinerror.png","buttons":[{"type":"postback","title":"Forgot Password?","payload":"stupid ass nigga forgot his password"}]},{"title":"Enrollment","image_url":"https://i.ibb.co/FHk5ttP/motivation.jpg","subtitle":"This section will make you understand the scope of offered courses\n👇👇👇","buttons":[{"type":"postback","title":"Access Material?","payload":"stupid ass nigga not accessing material"},{"type":"postback","title":"Previous Material?","payload":"stupid ass nigga not accessing previous material"}]},{"title":"Activation Error","image_url":"https://i.ibb.co/BCzgsTR/activation.png","subtitle":"This section will tell you about course enrollment & fee structure\n👇👇👇","buttons":[{"type":"postback","title":"Activate Account?","payload":"nigga dont know how to activate account"}]}]}}}}
 
 """@app.route('/', methods=['GET'])
 def verify():
@@ -170,6 +174,30 @@ def webhook():
 					elif messaging_event['postback'].get('payload') == 'questions.selection':
 						response = requests.post(fb_api,params=token_dict, json={"message": {"text": questions_selection}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
 
+					# Handling Error Support Gallery buttons response
+					elif messaging_event['postback'].get('payload') == 'error support':
+						response = requests.post(fb_api,params=token_dict, json=error_json)
+						response2 = requests.post(fb_api,params=token_dict, json={"recipient":{"id": sender_id}, "messaging_type": "RESPONSE","message":{"text": "If you want to go to previous, click Go to Previous\n👇👇👇","quick_replies":[{"content_type":"text","title":"Go To Previous ⏮","payload":"stupid nigga now wanna go to previous carousel"}]}})
+						return "ok", 200
+
+					# Handling Error Support Carousel Gallery buttons response
+					elif messaging_event['postback'].get('payload') == 'stupid ass nigga unable to load video':
+						response = requests.post(fb_api,params=token_dict, json={"message": {"text": video_error1}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
+
+						response2 = requests.post(fb_api,params=token_dict, json={"recipient":{"id": sender_id}, "messaging_type": "RESPONSE","message":{"text": "Solution:\n\nIn order to navigate, you are required to use NEXT and PREVIOUS buttons. If disabled please wait for few seconds so they become enabled.⏮⏭","quick_replies":[{"content_type":"text","title":"Continue Reading 🤖","payload":"illiterate nigga wanna continue reading to video_error2"}]}})
+
+					elif messaging_event['postback'].get('payload') == 'stupid ass nigga forgot his password':
+						response = requests.post(fb_api,params=token_dict, json={"message": {"text": questions_signup}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
+
+					elif messaging_event['postback'].get('payload') == 'stupid ass nigga not accessing material':
+						response = requests.post(fb_api,params=token_dict, json={"message": {"text": questions_signup}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
+
+					elif messaging_event['postback'].get('payload') == 'stupid ass nigga not accessing previous material':
+						response = requests.post(fb_api,params=token_dict, json={"message": {"text": questions_signup}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
+
+					elif messaging_event['postback'].get('payload') == 'nigga dont know how to activate account':
+						response = requests.post(fb_api,params=token_dict, json={"message": {"text": questions_signup}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
+
 					gen_continue_button(sender_id)
 
 				elif messaging_event.get('message'):
@@ -196,6 +224,13 @@ def webhook():
 
 						elif messaging_event['message']['quick_reply'].get('payload') == 'nigga clicked generic continue':
 							gen_carousel(sender_id)
+
+						elif messaging_event['message']['quick_reply'].get('payload') == 'stupid nigga now wanna go to previous carousel':
+							gen_carousel(sender_id)
+
+						elif messaging_event['message']['quick_reply'].get('payload') == 'illiterate nigga wanna continue reading to video_error2':
+							response = requests.post(fb_api,params=token_dict, json={"message": {"text": video_error2}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
+							gen_continue_button(sender_id)
 
 					# HANDLE NORMAL MESSAGES HERE
 					elif messaging_event['message'].get('text'):
