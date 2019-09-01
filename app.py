@@ -185,9 +185,9 @@ def webhook():
 					# Handling Error Support Carousel Gallery buttons response
 					elif messaging_event['postback'].get('payload') == 'stupid ass nigga unable to load video':
 						response = requests.post(fb_api,params=token_dict, json={"message": {"text": video_error1}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
-
 						response2 = requests.post(fb_api,params=token_dict, json={"recipient":{"id": sender_id}, "messaging_type": "RESPONSE","message":{"text": "Solution:\n\nIn order to navigate, you are required to use NEXT and PREVIOUS buttons. If disabled please wait for few seconds so they become enabled.⏮⏭","quick_replies":[{"content_type":"text","title":"Continue Reading 🤖","payload":"illiterate nigga wanna continue reading to video_error2"}]}})
-
+						return "ok", 200
+						
 					elif messaging_event['postback'].get('payload') == 'stupid ass nigga forgot his password':
 						response = requests.post(fb_api,params=token_dict, json={"message": {"text": questions_signup}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
 
