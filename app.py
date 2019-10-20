@@ -95,7 +95,7 @@ def webhook():
 						return "ok", 200
 						#print("quick reply get started", response2)
 
-					#--------------""" Handling Persistent Menu """--------------#
+					#--------------""" Handling Persistent Menu """--------------# 
 					# Handling Restart button
 					elif messaging_event['postback'].get('payload') == 'stupid ass nigga had the audacity to restart the bot':
 						welcome_msg(sender_id, niggas_name = name)
