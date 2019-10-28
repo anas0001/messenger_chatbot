@@ -83,8 +83,8 @@ def webhook():
 				recipient_id = messaging_event['recipient']['id']
 
 				response = requests.get(psid_url+sender_id + "?fields=name&access_token=" + PAGE_ACCESS_TOKEN)
-				name = json.loads(response.content)
-				name = name["name"]
+				user_json = json.loads(response.content)
+				user_name = user_json["name"]
 
 				error_json = {"recipient":{"id":sender_id},"message":{"attachment":{"type":"template","payload":{"template_type":"generic","elements":[{"title":"Video Error","image_url":"https://i.ibb.co/LRSRdj4/video-error.png","subtitle":" ","buttons":[{"type":"postback","payload":"stupid ass nigga unable to load video","title":"Unable to Load Video"}]},{"title":"Sign In Error","image_url":"https://i.ibb.co/3cYJYD6/signinerror.png","subtitle":" ","buttons":[{"type":"postback","title":"Forgot Password?","payload":"stupid ass nigga forgot his password"}]},{"title":"Enrollment","image_url":"https://i.ibb.co/KLH5THd/enrollment.png","subtitle":" ","buttons":[{"type":"postback","title":"Access Material?","payload":"stupid ass nigga not accessing material"},{"type":"postback","title":"Previous Material?","payload":"stupid ass nigga not accessing previous material"}]},{"title":"Activation Error","image_url":"https://i.ibb.co/BCzgsTR/activation.png","subtitle":" ","buttons":[{"type":"postback","title":"Activate Account?","payload":"nigga dont know how to activate account"}]}]}}}}
 
@@ -95,7 +95,7 @@ def webhook():
 						return "ok", 200
 						#print("quick reply get started", response2)
 
-					#--------------""" Handling Persistent Menu """--------------# 
+					#--------------""" Handling Persistent Menu """--------------#
 					# Handling Restart button
 					elif messaging_event['postback'].get('payload') == 'stupid ass nigga had the audacity to restart the bot':
 						welcome_msg(sender_id, niggas_name = name)
