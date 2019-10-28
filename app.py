@@ -91,14 +91,14 @@ def webhook():
 				if messaging_event.get('postback'):
 					# Handling get_started response
 					if messaging_event['postback'].get('payload') == 'some bitch clicked the get started button':
-						welcome_msg(sender_id, niggas_name = name)
+						welcome_msg(sender_id, niggas_name = user_name)
 						return "ok", 200
 						#print("quick reply get started", response2)
 
 					#--------------""" Handling Persistent Menu """--------------#
 					# Handling Restart button
 					elif messaging_event['postback'].get('payload') == 'stupid ass nigga had the audacity to restart the bot':
-						welcome_msg(sender_id, niggas_name = name)
+						welcome_msg(sender_id, niggas_name = user_name)
 						return "ok", 200
 
 					# Handling Live Chat button
