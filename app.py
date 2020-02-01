@@ -1,18 +1,24 @@
-from pymessenger import Bot
+# imports
 import os, sys, requests, json
 from flask import Flask, request, jsonify
 
 app = Flask('My echo bot')
 
+# the verification token is a string that is saved in the Facebook app. The webhook will return the same string to the app (through verify method in this code). In this way, the app will verify that the webhook is valid.
 VERIFICATION_TOKEN = "hello"
+# page access token is probably an index number for the app. Webhook will verify that it is connected to the right app with this page access token.
 PAGE_ACCESS_TOKEN = 'EAAg4f5ZBJPCwBACZBIOH5xDydyb4utfDO7sFuG2hChwCewqppbHYux2KrfExxtlz7wiEeYAaWUlZAgZBgfBtCoxHixH0ZAwer7NGHQG3nLTdsrkZCQTJbO33gT61GcpVmMcFagBbBPm7we5NZCaNlqobTeh85S6LemDHiJ800EibFMUtl58IQZA4YA3VTAC5qkEZD'
 token_dict = {"access_token": PAGE_ACCESS_TOKEN}
-bot = Bot(PAGE_ACCESS_TOKEN)
 
+# different functionalities of chatbot require calling different Facebook APIs.
+# to send message, quick replies and galleries etc. we call the facebook graph messages API.
 fb_api = "https://graph.facebook.com/v4.0/me/messages"
+# to get the user's details, such as name, profile picture, location etc. we use facebook graph messenger profile API.
 profile_api = "https://graph.facebook.com/v4.0/me/messenger_profile"
+# this is a generic link for facebook graph API. It is useless as it is. I have concetenated links with it to use for myself in the code.
 psid_url = "https://graph.facebook.com/"
 
+# These are just the strings of messages that are returned to the user.
 welcome_message = "Get Started clicked. Go fun yourself. ASSALAM-U-ALAIKUM 🙂\n\n"
 
 next_message = "⚠⚠⚠\nIf you want to chat with a Human just go to Menu with text field of Messenger and click \"Live Chat\" 📱"
@@ -44,10 +50,15 @@ access_material_error = "👇👇👇\n\nProblem accessing material?\n\nStudy Ma
 previous_material_error = "👇👇👇\n\nYES, you can access all previous material missed.\n\nLectures are offered on weekly basis.📅"
 activation_error = "👇👇👇\n\nFollow these steps for account activation.\n\n✔ Sign in with your registered Email Address and Password.\n\n✔ Request activation email to activate your account."
 
+# In order to show a message, quick reply or gallery, we have to send JSONs to our app. Below is the complete json to show the main gallery in the Digiskills chatbot.
 carousel_json = {"message":{"attachment":{"type":"template","payload":{"template_type":"generic","elements":[{"title":"DigiSkills","image_url":"https://i.ibb.co/qypcyYQ/Digiskills.jpg","subtitle":"This section will tell you about DigiSkills training program\n👇👇👇","buttons":[{"type":"postback","payload":"stupid ass nigga asked what is digiskills","title":"What is DigiSkills?"},{"type":"postback","title":"Type of Program","payload":"nigga asked type of program"},{"type":"postback","title":"Benefits of Program","payload":"nigga asked benefits of program"}]},{"title":"Freelancing","image_url":"https://i.ibb.co/WgphLjx/freelance.jpg","subtitle":"This section will tell you the scope of Freelancing after any course\n👇👇👇","buttons":[{"type":"postback","title":"Scope of Courses?","payload":"freelance.scope"},{"type":"postback","title":"How can I get Work?","payload":"freelance.work"},{"type":"postback","title":"Do you Offer Jobs?","payload":"freelance.jobs"}]},{"title":"Motivation","image_url":"https://i.ibb.co/FHk5ttP/motivation.jpg","subtitle":"This section will make you understand the scope of offered courses\n👇👇👇","buttons":[{"type":"postback","title":"Certification","payload":"motivation.certification"},{"type":"postback","title":"Studying Procedure","payload":"motivation.procedure"}]},{"title":"Start Training","image_url":"https://i.ibb.co/hcB3YJc/Start-training.jpg","subtitle":"This section will tell you about course enrollment & fee structure\n👇👇👇","buttons":[{"type":"postback","title":"Enroll Courses","payload":"training.enroll"},{"type":"postback","title":"Fee Structure","payload":"training.fee"},{"type":"postback","title":"Content Availability","payload":"training.content"}]},{"title":"Courses","image_url":"https://i.ibb.co/G0rCdmS/courses.png","subtitle":"This section will help you with how you will interact with offered cources?\n👇👇👇","buttons":[{"type":"postback","title":"How to get Training?","payload":"courses.training"},{"type":"postback","title":"Can I ask Questions?","payload":"courses.questions"},{"type":"postback","title":"Course Details?","payload":"courses.details"}]},{"title":"Requirements","image_url":"https://i.ibb.co/KzG0Rjs/requirements.jpg","subtitle":"This section will help you with the requirement for having this course.\n👇👇👇","buttons":[{"type":"postback","title":"Technical","payload":"requirements.technical"},{"type":"postback","title":"Educational","payload":"requirements.educational"}]},{"title":"Batches","image_url":"https://i.ibb.co/wMhqDxc/batch.jpg","subtitle":"This section will tell you about Details of batches\n👇👇👇","buttons":[{"type":"postback","title":"Next Batch","payload":"batches.next"},{"type":"postback","title":"Course Limits","payload":"batches.limits"}]},{"title":"Error Support","image_url":"https://i.ibb.co/X2dqxmY/error-support.jpg","subtitle":"This section will help you to figure out the solution of your related error\n👇👇👇","buttons":[{"type":"postback","title":"Error Support","payload":"error support"}]},{"title":"Other Questions","image_url":"https://i.ibb.co/gF1mCjP/other-question.jpg","subtitle":"More Questions","buttons":[{"type":"postback","title":"How can I signup?","payload":"questions.signup"},{"type":"postback","title":"Upcoming Courses?","payload":"questions.courses"},{"type":"postback","title":"Course Selection?","payload":"questions.selection"}]},{"title":"Live Chat","image_url":"https://i.ibb.co/D4zDSXx/live-chat.jpg","subtitle":"If you want to interact with a human operator please click below\n👇👇👇","buttons":[{"type":"postback","title":"Live Chat","payload":"live chat"}]}]}}}}
 
 #error_json = {"recipient":{"id":sender_id},"message":{"attachment":{"type":"template","payload":{"template_type":"generic","elements":[{"title":"Video Error","image_url":"https://i.ibb.co/LRSRdj4/video-error.png","subtitle":" ","buttons":[{"type":"postback","payload":"stupid ass nigga unable to load video","title":"Unable to Load Video"}]},{"title":"Sign In Error","image_url":"https://i.ibb.co/3cYJYD6/signinerror.png","subtitle":" ","buttons":[{"type":"postback","title":"Forgot Password?","payload":"stupid ass nigga forgot his password"}]},{"title":"Enrollment","image_url":"https://i.ibb.co/FHk5ttP/motivation.jpg","subtitle":" ","buttons":[{"type":"postback","title":"Access Material?","payload":"stupid ass nigga not accessing material"},{"type":"postback","title":"Previous Material?","payload":"stupid ass nigga not accessing previous material"}]},{"title":"Activation Error","image_url":"https://i.ibb.co/BCzgsTR/activation.png","subtitle":" ","buttons":[{"type":"postback","title":"Activate Account?","payload":"nigga dont know how to activate account"}]}]}}}}
 
+# the verify methods is used only once. it is used to verify that the webhook is valid and the facebook app
+# is connected to the right webhook.
+
+# this code is commented because it is not needed after running the webhook for the first time. It's purpose is to only verify that the webhook is valid. It can be uncommented and there still would be no change in anything because it has served it's purpose.
 """@app.route('/', methods=['GET'])
 def verify():
 	if request.args.get("hub.mode") == "subscribe" and request.args.get("hub.challenge"):
@@ -56,10 +67,16 @@ def verify():
 		return request.args["hub.challenge"], 200
 	return "Hello world", 200"""
 
+# this is the main method which deals with all the user inputs and chatbot responses.
 @app.route('/', methods=['POST'])
 def webhook():
+	# this print statement checks what input has been placed by the user. It is here for debugging purposes only.
 	print(request.data)
+
+	# this line of code extracts the json out of the user input.
 	data = request.get_json()
+
+	""" below lines of commented code are my attempts at enabling the 'get started' button and the 'persistent menu'. These codes are also needed to be run once, once they run, they are no longer needed. One or two lines in this code are probably wrong, and I don't remember anymore which one, so you'll have to figure it out yourself"""
 	##get_started = requests.post(fb_api,params=token_dict,{"get_started":{"payload":"some bitch clicked the get started button"}})
 	######
 	######persis_json = {"persistent_menu":[{"locale":"default","composer_input_disabled":False,"call_to_actions":[{"type":"postback","title":"Restart","payload":"stupid ass nigga had the audacity to restart the bot"},{"type":"postback","title":"Live Chat","payload":"stupid ass nigga asking for a real human being to talk"}]}]}
@@ -71,6 +88,8 @@ def webhook():
 	#get_started = requests.post(profile_api,params=token_dict,data = json.dumps(get_started_json), headers={'Content-Type': 'application/json'})
 	#print("get_started", get_started)
 
+
+	# below lines of code are traversing through the json which our code/webhook received from the user.
 	if data['object'] == "page":
 		entries = data['entry']
 
@@ -79,13 +98,17 @@ def webhook():
 
 			for messaging_event in messaging:
 
+				# getting the sender ID
 				sender_id = messaging_event['sender']['id']
+				# getting the receiver ID
 				recipient_id = messaging_event['recipient']['id']
 
+				# using a GET request to extract the user's information. In the below lines of code, we get the name of the user. Now, we can call the user by his name.
 				response = requests.get(psid_url+sender_id + "?fields=name&access_token=" + PAGE_ACCESS_TOKEN)
 				user_json = json.loads(response.content)
 				user_name = user_json["name"]
 
+				# this is the json for another gallery
 				error_json = {"recipient":{"id":sender_id},"message":{"attachment":{"type":"template","payload":{"template_type":"generic","elements":[{"title":"Video Error","image_url":"https://i.ibb.co/LRSRdj4/video-error.png","subtitle":" ","buttons":[{"type":"postback","payload":"stupid ass nigga unable to load video","title":"Unable to Load Video"}]},{"title":"Sign In Error","image_url":"https://i.ibb.co/3cYJYD6/signinerror.png","subtitle":" ","buttons":[{"type":"postback","title":"Forgot Password?","payload":"stupid ass nigga forgot his password"}]},{"title":"Enrollment","image_url":"https://i.ibb.co/KLH5THd/enrollment.png","subtitle":" ","buttons":[{"type":"postback","title":"Access Material?","payload":"stupid ass nigga not accessing material"},{"type":"postback","title":"Previous Material?","payload":"stupid ass nigga not accessing previous material"}]},{"title":"Activation Error","image_url":"https://i.ibb.co/BCzgsTR/activation.png","subtitle":" ","buttons":[{"type":"postback","title":"Activate Account?","payload":"nigga dont know how to activate account"}]}]}}}}
 
 				if messaging_event.get('postback'):
@@ -243,17 +266,9 @@ def webhook():
 						# HANDLE TEXT MESSAGES
 						query = messaging_event['message']['text']
 						response = requests.post(fb_api,params=token_dict, json={"message": {"text": "don't talk to me you stupid ass nigga. just stop sending messages. use the buttons. geez"}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
-						#print("hello",response)
-						#print(response)
-						#result = response.json()
-						#print(result)
-						#return result
-						#bot.send_text_message(sender_id, query)
-						#bot.send_video_url(sender_id, "https://www.youtube.com/watch?v=1I-3vJSC-Vo")
-						#return jsonify({"messages":[{"text": "Welcome to the Chatfuel Rockets!"},{"text": "What are you up to?"}]})
+
 	return "ok", 200
 
-#@app.route('/', methods=['POST'])
 def gen_carousel(id):
 	carousel_json['recipient'] = {"id": id}
 	response2 = requests.post(fb_api,params=token_dict, json=carousel_json)
