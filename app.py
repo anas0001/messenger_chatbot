@@ -105,7 +105,10 @@ def webhook():
 
 				# using a GET request to extract the user's information. In the below lines of code, we get the name of the user. Now, we can call the user by his name.
 				response = requests.get(psid_url+sender_id + "?fields=name&access_token=" + PAGE_ACCESS_TOKEN)
+				print("------------------------------response------------------------------")
+				print(response)
 				user_json = json.loads(response.content)
+				print("------------------------------user_json------------------------------")
 				print(user_json)
 				user_name = user_json["name"]
 
