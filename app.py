@@ -71,8 +71,10 @@ def verify():
 @app.route('/', methods=['POST'])
 def webhook():
 	# this print statement checks what input has been placed by the user. It is here for debugging purposes only.
+	print("-----------------------------------------------------------------------------------------------")
 	print(request.data)
-
+	print("-----------------------------------------------------------------------------------------------")
+	
 	# this line of code extracts the json out of the user input.
 	data = request.get_json()
 
@@ -104,13 +106,13 @@ def webhook():
 				recipient_id = messaging_event['recipient']['id']
 
 				# using a GET request to extract the user's information. In the below lines of code, we get the name of the user. Now, we can call the user by his name.
-				print("++++++++++++++++++++++++++++++sender ID:", sender_id)
+				#print("++++++++++++++++++++++++++++++sender ID:", sender_id)
 				response = requests.get(psid_url+sender_id + "?fields=name&access_token=" + PAGE_ACCESS_TOKEN)
-				print("------------------------------response------------------------------")
-				print(response)
+				#print("------------------------------response------------------------------")
+				#print(response)
 				user_json = json.loads(response.content)
-				print("------------------------------user_json------------------------------")
-				print(user_json)
+				#print("------------------------------user_json------------------------------")
+				#print(user_json)
 				user_name = user_json["name"]
 
 				# this is the json for another gallery
