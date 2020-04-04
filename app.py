@@ -71,10 +71,10 @@ def verify():
 @app.route('/', methods=['POST'])
 def webhook():
 	# this print statement checks what input has been placed by the user. It is here for debugging purposes only.
-	print("-----------------------------------------------------------------------------------------------")
+	print("start-----------------------------------------------------------------------------------------------")
 	print(request.data)
-	print("-----------------------------------------------------------------------------------------------")
-	
+	print("end-----------------------------------------------------------------------------------------------")
+
 	# this line of code extracts the json out of the user input.
 	data = request.get_json()
 
