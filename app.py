@@ -97,6 +97,7 @@ def webhook():
 
 		for entry in entries:
 			messaging = entry['messaging']
+			temp_id = entry['id']
 
 			for messaging_event in messaging:
 
@@ -110,13 +111,14 @@ def webhook():
 
 				# using a GET request to extract the user's information. In the below lines of code, we get the name of the user. Now, we can call the user by his name.
 				#print("++++++++++++++++++++++++++++++sender ID:", sender_id)
-				response = requests.get(psid_url+sender_id + "?fields=name&access_token=" + PAGE_ACCESS_TOKEN)
-				#print("------------------------------response------------------------------")
-				#print(response)
-				user_json = json.loads(response.content)
-				#print("------------------------------user_json------------------------------")
-				#print(user_json)
-				user_name = user_json["name"]
+				if temp_id != sender_id:
+					response = requests.get(psid_url+sender_id + "?fields=name&access_token=" + PAGE_ACCESS_TOKEN)
+					#print("------------------------------response------------------------------")
+					#print(response)
+					user_json = json.loads(response.content)
+					#print("------------------------------user_json------------------------------")
+					#print(user_json)
+					user_name = user_json["name"]
 
 				# this is the json for another gallery
 				error_json = {"recipient":{"id":sender_id},"message":{"attachment":{"type":"template","payload":{"template_type":"generic","elements":[{"title":"Video Error","image_url":"https://i.ibb.co/LRSRdj4/video-error.png","subtitle":" ","buttons":[{"type":"postback","payload":"stupid ass nigga unable to load video","title":"Unable to Load Video"}]},{"title":"Sign In Error","image_url":"https://i.ibb.co/3cYJYD6/signinerror.png","subtitle":" ","buttons":[{"type":"postback","title":"Forgot Password?","payload":"stupid ass nigga forgot his password"}]},{"title":"Enrollment","image_url":"https://i.ibb.co/KLH5THd/enrollment.png","subtitle":" ","buttons":[{"type":"postback","title":"Access Material?","payload":"stupid ass nigga not accessing material"},{"type":"postback","title":"Previous Material?","payload":"stupid ass nigga not accessing previous material"}]},{"title":"Activation Error","image_url":"https://i.ibb.co/BCzgsTR/activation.png","subtitle":" ","buttons":[{"type":"postback","title":"Activate Account?","payload":"nigga dont know how to activate account"}]}]}}}}
