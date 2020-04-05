@@ -102,6 +102,9 @@ def webhook():
 
 				# getting the sender ID
 				sender_id = messaging_event['sender']['id']
+				print("sender_id-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-")
+				print(sender_id)
+				print("id-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-")
 				# getting the receiver ID
 				recipient_id = messaging_event['recipient']['id']
 
