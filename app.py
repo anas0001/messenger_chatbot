@@ -72,7 +72,7 @@ def verify():
 def webhook():
 	# this print statement checks what input has been placed by the user. It is here for debugging purposes only.
 	print("start-----------------------------------------------------------------------------------------------")
-	print(request.data)
+	#print(request.data)
 	print("end-----------------------------------------------------------------------------------------------")
 
 	# this line of code extracts the json out of the user input.
