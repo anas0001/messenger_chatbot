@@ -2,12 +2,10 @@
 import os, sys, requests, json
 from flask import Flask, request, jsonify
 
-app = Flask('My echo bot')
-
 # the verification token is a string that is saved in the Facebook app. The webhook will return the same string to the app (through verify method in this code). In this way, the app will verify that the webhook is valid.
 VERIFICATION_TOKEN = "hello"
 # page access token is probably an index number for the app. Webhook will verify that it is connected to the right app with this page access token.
-PAGE_ACCESS_TOKEN = 'EAAg4f5ZBJPCwBACZBIOH5xDydyb4utfDO7sFuG2hChwCewqppbHYux2KrfExxtlz7wiEeYAaWUlZAgZBgfBtCoxHixH0ZAwer7NGHQG3nLTdsrkZCQTJbO33gT61GcpVmMcFagBbBPm7we5NZCaNlqobTeh85S6LemDHiJ800EibFMUtl58IQZA4YA3VTAC5qkEZD'
+PAGE_ACCESS_TOKEN = 'Token from the Facebook App goes here'
 token_dict = {"access_token": PAGE_ACCESS_TOKEN}
 
 # different functionalities of chatbot require calling different Facebook APIs.
@@ -59,21 +57,18 @@ carousel_json = {"message":{"attachment":{"type":"template","payload":{"template
 # is connected to the right webhook.
 
 # this code is commented because it is not needed after running the webhook for the first time. It's purpose is to only verify that the webhook is valid. It can be uncommented and there still would be no change in anything because it has served it's purpose.
-"""@app.route('/', methods=['GET'])
+@app.route('/', methods=['GET'])
 def verify():
 	if request.args.get("hub.mode") == "subscribe" and request.args.get("hub.challenge"):
 		if not request.args.get("hub.verify_token") == VERIFICATION_TOKEN:
 			return "Verification token mismatch", 403
 		return request.args["hub.challenge"], 200
-	return "Hello world", 200"""
+	return "Hello world", 200
 
 # this is the main method which deals with all the user inputs and chatbot responses.
 @app.route('/', methods=['POST'])
 def webhook():
 	# this print statement checks what input has been placed by the user. It is here for debugging purposes only.
-	print("start-----------------------------------------------------------------------------------------------")
-	print(request.data)
-	print("end-----------------------------------------------------------------------------------------------")
 
 	# this line of code extracts the json out of the user input.
 	data = request.get_json()
@@ -103,21 +98,13 @@ def webhook():
 
 				# getting the sender ID
 				sender_id = messaging_event['sender']['id']
-				print("sender_id-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-")
-				print(sender_id)
-				print("id-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-")
 				# getting the receiver ID
 				recipient_id = messaging_event['recipient']['id']
 
 				# using a GET request to extract the user's information. In the below lines of code, we get the name of the user. Now, we can call the user by his name.
-				#print("++++++++++++++++++++++++++++++sender ID:", sender_id)
 				if temp_id != sender_id:
 					response = requests.get(psid_url+sender_id + "?fields=name&access_token=" + PAGE_ACCESS_TOKEN)
-					#print("------------------------------response------------------------------")
-					#print(response)
 					user_json = json.loads(response.content)
-					#print("------------------------------user_json------------------------------")
-					#print(user_json)
 					user_name = user_json["name"]
 
 				# this is the json for another gallery
@@ -128,7 +115,6 @@ def webhook():
 					if messaging_event['postback'].get('payload') == 'some bitch clicked the get started button':
 						welcome_msg(sender_id, niggas_name = user_name)
 						return "ok", 200
-						#print("quick reply get started", response2)
 
 					#--------------""" Handling Persistent Menu """--------------#
 					# Handling Restart button
@@ -277,7 +263,8 @@ def webhook():
 					elif messaging_event['message'].get('text'):
 						# HANDLE TEXT MESSAGES
 						query = messaging_event['message']['text']
-						response = requests.post(fb_api,params=token_dict, json={"message": {"text": "don't talk to me you stupid ass nigga. just stop sending messages. use the buttons. geez"}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
+						response = requests.post(fb_api,params=token_dict, json={"message": {"text": "Please use the buttons to communicate. I'm not trained to respond to text, yet."}, "recipient": {"id": sender_id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
+						welcome_msg(sender_id, niggas_name = user_name)
 
 	return "ok", 200
 
@@ -291,16 +278,6 @@ def gen_continue_button(id):
 def welcome_msg(id, niggas_name = "nigga"):
 	response = requests.post(fb_api,params=token_dict, json={"message": {"text": welcome_message + niggas_name + " Nice to meet you. 😊\nDigiSkills Chatbot at your service 🤖"}, "recipient": {"id": id}, "notification_type": "REGULAR", "messaging_type": "RESPONSE"})
 	response2 = requests.post(fb_api,params=token_dict, json={"recipient":{"id": id}, "messaging_type": "RESPONSE","message":{"text": "You can ask me about DigiSkills Training program.","quick_replies":[{"content_type":"text","title":"Next","payload":"nigga clicked next"}]}})
-
-	#print("continue2 carousel", response2)
-#	get_started_json= {"get_started":{"payload":"some bitch clicked the get started button"}}
-#	get_started = requests.post(profile_api,params=token_dict,data = json.dumps(get_started_json), headers={'Content-Type': 'application/json'})
-#	print("get_started", get_started)
-
-#@app.route('/', methods=['POST'])
-#def persistent_menu():
-#	persistent_menu_json = {"persistent_menu":[{"locale":"default","composer_input_disabled":false,"call_to_actions":[{"type":"postback","title":"Talk to an agent","payload":"CARE_HELP"},{"type":"postback","title":"Outfit suggestions","payload":"CURATION"},{"type":"web_url","title":"Shop now","url":"https://www.originalcoastclothing.com/","webview_height_ratio":"full"}]}]}
-#	persistent = requests.post(profile_api, params=token_dict, json= persistent_menu_json)
 
 if __name__ == "__main__":
 	app.run(port=5000, use_reloader = True)
